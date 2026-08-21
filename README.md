@@ -30,4 +30,4 @@ The generated standalone page is `output/iros2026_explorer.html`.
 
 ## Source
 
-- <https://2026.ieee-iros.org/program/paper-index/>
+- <https://2026.ieee-iros.org/program/paper_index/>

@@ -157,6 +157,8 @@ HTML = r"""<!doctype html>
   .stat-pill b { color: var(--text); font-weight: 600; }
   .stat-pill.accent { background: var(--accent-soft); border-color: rgba(0,102,204,0.18); color: var(--accent); }
   .stat-pill.accent b { color: var(--accent); }
+  .source-link { font-weight: 600; white-space: nowrap; }
+  .source-link:hover { text-decoration: none; background: rgba(0,102,204,0.14); }
   @media (max-width: 980px) { .topbar .right .stat-pill { display: none; } .topbar .right .stat-pill.accent { display: inline-block; } }
 
   /* Layout */
@@ -609,7 +611,7 @@ HTML = r"""<!doctype html>
     <div class="right">
       <span class="stat-pill"><b>1,933</b> papers</span>
       <span class="stat-pill"><b>3</b> program days</span>
-      <span class="stat-pill accent"><b>Searchable</b> index</span>
+      <a class="stat-pill accent source-link" href="https://2026.ieee-iros.org/program/paper_index/" target="_blank" rel="noopener" aria-label="Open the official IROS 2026 Paper and Author Index">Official source ↗</a>
     </div>
   </div>
 </div>
@@ -672,7 +674,7 @@ HTML = r"""<!doctype html>
           <div class="row"><span>Accepted contributed papers</span><div class="track"><div class="fill" style="width:36.45%"></div></div><b>1,585 / 4,348</b></div>
         </div>
         <div class="scope-note"><strong>Why does the program list 1,933 papers?</strong> The 1,585 figure covers only papers submitted directly as IROS contributed papers. The final technical program can additionally include eligible IEEE RAS/IES journal papers presented at IROS, together with final program changes. The difference of 348 is therefore a <strong>net difference between two scopes</strong>, not by itself an exact count of journal papers.</div>
-        <div class="footnote">Sources: IROS 2026 acceptance decision letters issued June 17, 2026; <a href="https://2026.ieee-iros.org/program/paper-index/" target="_blank" rel="noopener">official Paper &amp; Author Index</a>; <a href="https://www.ieee-ras.org/publications/ieee-robotics-and-automation-letters/" target="_blank" rel="noopener">IEEE RAS journal conference-presentation policy</a>.</div>
+        <div class="footnote">Sources: IROS 2026 acceptance decision letters issued June 17, 2026; <a href="https://2026.ieee-iros.org/program/paper_index/" target="_blank" rel="noopener">official Paper &amp; Author Index</a>; <a href="https://www.ieee-ras.org/publications/ieee-robotics-and-automation-letters/" target="_blank" rel="noopener">IEEE RAS journal conference-presentation policy</a>.</div>
       </div>
     </section>
 

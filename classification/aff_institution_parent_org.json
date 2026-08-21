@@ -1,0 +1,116 @@
+{
+  "Alibaba DAMO Academy": {
+    "parent_org": "Alibaba",
+    "parent_country": "China",
+    "institution_country": "China",
+    "policy": "research-lab"
+  },
+  "Bosch Center for Artificial Intelligence": {
+    "parent_org": "Bosch",
+    "parent_country": "Germany",
+    "institution_country": "Germany",
+    "policy": "research-lab"
+  },
+  "Bosch China": {
+    "parent_org": "Bosch",
+    "parent_country": "Germany",
+    "institution_country": "China",
+    "policy": "regional-branch"
+  },
+  "Bosch Corporate Research": {
+    "parent_org": "Bosch",
+    "parent_country": "Germany",
+    "institution_country": "Germany",
+    "policy": "research-lab"
+  },
+  "ByteDance Seed Robotics": {
+    "parent_org": "ByteDance",
+    "parent_country": "China",
+    "institution_country": "China",
+    "policy": "research-lab"
+  },
+  "Georgia Tech Europe": {
+    "parent_org": "Georgia Tech",
+    "parent_country": "USA",
+    "institution_country": "France",
+    "policy": "overseas-campus"
+  },
+  "Honda R&D": {
+    "parent_org": "Honda",
+    "parent_country": "Japan",
+    "institution_country": "Japan",
+    "policy": "regional-branch"
+  },
+  "Honda Research Institute Europe": {
+    "parent_org": "Honda",
+    "parent_country": "Japan",
+    "institution_country": "Germany",
+    "policy": "regional-research-lab"
+  },
+  "Honda Research Institute USA": {
+    "parent_org": "Honda",
+    "parent_country": "Japan",
+    "institution_country": "USA",
+    "policy": "regional-research-lab"
+  },
+  "Huawei Technologies Canada": {
+    "parent_org": "Huawei",
+    "parent_country": "China",
+    "institution_country": "Canada",
+    "policy": "regional-branch"
+  },
+  "MERL": {
+    "parent_org": "Mitsubishi Electric",
+    "parent_country": "Japan",
+    "institution_country": "USA",
+    "policy": "research-lab"
+  },
+  "Noah's Ark Lab": {
+    "parent_org": "Huawei",
+    "parent_country": "China",
+    "institution_country": "Canada",
+    "policy": "site-aware"
+  },
+  "PICO": {
+    "parent_org": "ByteDance",
+    "parent_country": "China",
+    "institution_country": "China",
+    "policy": "subsidiary"
+  },
+  "Samsung AI Center": {
+    "parent_org": "Samsung",
+    "parent_country": "South Korea",
+    "institution_country": "South Korea",
+    "policy": "site-aware"
+  },
+  "Samsung Research America": {
+    "parent_org": "Samsung",
+    "parent_country": "South Korea",
+    "institution_country": "USA",
+    "policy": "regional-research-lab"
+  },
+  "Toyota Motor East Japan": {
+    "parent_org": "Toyota",
+    "parent_country": "Japan",
+    "institution_country": "Japan",
+    "policy": "regional-branch"
+  },
+  "Toyota Motor North America": {
+    "parent_org": "Toyota",
+    "parent_country": "Japan",
+    "institution_country": "USA",
+    "policy": "regional-branch"
+  },
+  "Toyota Motor North America R&D": {
+    "parent_org": "Toyota",
+    "parent_country": "Japan",
+    "institution_country": "USA",
+    "policy": "regional-branch"
+  },
+  "Toyota Research Institute": {
+    "parent_org": "Toyota",
+    "parent_country": "Japan",
+    "institution_country": "USA",
+    "policy": "research-institute"
+  }
+}

@@ -648,7 +648,7 @@
 
     <section id="search">
       <h2>Find papers</h2>
-      <div class="section-sub">Searches across titles, authors, raw affiliations, canonical institutions, sessions, topics, and author-declared keywords. Use up to three search conditions with AND / OR.</div>
+      <div class="section-sub">Searches across titles, authors, raw affiliations, canonical institutions, rooms, sessions, topics, and author-declared keywords. Use up to three search conditions with AND / OR.</div>
       <div class="toolbar">
         <div class="toolbar-row search-row">
           <div class="search-group" role="group" aria-label="Search conditions">
@@ -927,7 +927,8 @@ PAPERS.forEach(p => {
     " " + p.keywords.join(" ").toLowerCase() +
     " " + p.abstract.toLowerCase() +
     " " + (p.session_title || "").toLowerCase() +
-    " " + (p.sessionType || "").toLowerCase()
+    " " + (p.sessionType || "").toLowerCase() +
+    " " + (p.room || "").toLowerCase()
   );
 });
 
@@ -1595,6 +1596,8 @@ function render() {
         ${dayChip(p.day, fDay && p.day === fDay)}
         ${typeChip}
         <span>${escapeHTML(p.time)}</span>
+        <span class="dot">·</span>
+        <span title="Presentation room">Room ${escapeHTML(p.room || "TBA")}</span>
         <span class="dot">·</span>
         <span>${escapeHTML(p.code)}</span>
         <span class="dot">·</span>

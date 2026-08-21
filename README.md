@@ -5,7 +5,17 @@ Self-contained explorer for all 1,933 papers in the IROS 2026 Paper & Author Ind
 Live site: <https://gisbi-kim.github.io/iros2026-explorer/>
 
 Features include title/author/affiliation/keyword search, day and session filters,
-topic and country summaries, sortable results, and shareable filter URLs.
+topic and country summaries, submission and acceptance context, sortable results,
+and shareable filter URLs.
+
+## Counting scope
+
+- IROS 2026 acceptance decisions reported 4,348 contributed-paper submissions,
+  with 1,585 accepted (36% rounded; 36.45% from the published counts).
+- The official final Paper & Author Index contains 1,933 program papers. This is
+  a broader presentation-program count that can include eligible IEEE RAS/IES
+  journal papers as well as final program changes; it is not the numerator used
+  for the contributed-paper acceptance rate.
 
 ## Build
 

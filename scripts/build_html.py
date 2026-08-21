@@ -296,8 +296,11 @@ HTML = r"""<!doctype html>
   .stats-grid {
     display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px;
   }
+  .stats-grid.submission-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   @media (max-width: 1100px) { .stats-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-  @media (max-width: 700px)  { .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 1100px) { .stats-grid.submission-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 700px)  { .stats-grid, .stats-grid.submission-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 420px)  { .stats-grid, .stats-grid.submission-grid { grid-template-columns: 1fr; } }
   .stat {
     background: rgba(255,255,255,0.78); border: 1px solid rgba(255,255,255,0.7);
     border-radius: 12px; padding: 16px 18px;
@@ -315,6 +318,12 @@ HTML = r"""<!doctype html>
     border-radius: 999px; overflow: hidden;
   }
   .accept-bar .fill { height: 100%; background: linear-gradient(90deg, #0066cc, #34c759); border-radius: 999px; }
+  .scope-note {
+    margin-top: 16px; padding: 14px 16px; border-radius: 12px;
+    background: rgba(255,255,255,0.72); border: 1px solid rgba(0,102,204,0.14);
+    color: var(--text-2); font-size: 13px; line-height: 1.55;
+  }
+  .scope-note strong { color: var(--text); }
   .footnote { color: var(--muted); font-size: 12px; margin-top: 14px; line-height: 1.5; }
 
   /* Two-column block */
@@ -610,6 +619,7 @@ HTML = r"""<!doctype html>
   <aside class="sidebar">
     <h4>Overview</h4>
     <a href="#overview" class="active">Introduction</a>
+    <a href="#submissions">Submissions &amp; acceptance</a>
     <a href="#stats">Conference statistics</a>
     <h4>Trends</h4>
     <a href="#kw-trends">Author keywords</a>
@@ -630,6 +640,40 @@ HTML = r"""<!doctype html>
       <h1>Paper Explorer</h1>
       <p class="lede">Search and explore all <span id="lede-count">…</span> indexed papers across Monday · Tuesday · Wednesday — with authors, affiliations, keywords, sessions, and topic-level trend infographics.</p>
       <div class="kpis" id="kpis"></div>
+    </section>
+
+    <section id="submissions">
+      <h2>Submissions &amp; acceptance <span class="pill">Contributed papers</span></h2>
+      <div class="section-sub">The acceptance figures and the final program index measure different populations.</div>
+      <div class="stats-hero">
+        <div class="stats-grid submission-grid">
+          <div class="stat">
+            <div class="v">4,348</div>
+            <div class="l">SUBMISSIONS</div>
+            <div class="desc">Contributed papers received</div>
+          </div>
+          <div class="stat">
+            <div class="v accent">1,585</div>
+            <div class="l">ACCEPTED</div>
+            <div class="desc">Accepted contributed papers</div>
+          </div>
+          <div class="stat">
+            <div class="v green">36%</div>
+            <div class="l">ACCEPTANCE RATE</div>
+            <div class="desc">Official rounded rate (36.45% exact)</div>
+          </div>
+          <div class="stat">
+            <div class="v">1,933</div>
+            <div class="l">PROGRAM INDEX</div>
+            <div class="desc">All papers in the final Paper &amp; Author Index</div>
+          </div>
+        </div>
+        <div class="accept-bar">
+          <div class="row"><span>Accepted contributed papers</span><div class="track"><div class="fill" style="width:36.45%"></div></div><b>1,585 / 4,348</b></div>
+        </div>
+        <div class="scope-note"><strong>Why does the program list 1,933 papers?</strong> The 1,585 figure covers only papers submitted directly as IROS contributed papers. The final technical program can additionally include eligible IEEE RAS/IES journal papers presented at IROS, together with final program changes. The difference of 348 is therefore a <strong>net difference between two scopes</strong>, not by itself an exact count of journal papers.</div>
+        <div class="footnote">Sources: IROS 2026 acceptance decision letters issued June 17, 2026; <a href="https://2026.ieee-iros.org/program/paper-index/" target="_blank" rel="noopener">official Paper &amp; Author Index</a>; <a href="https://www.ieee-ras.org/publications/ieee-robotics-and-automation-letters/" target="_blank" rel="noopener">IEEE RAS journal conference-presentation policy</a>.</div>
+      </div>
     </section>
 
     <section id="stats">

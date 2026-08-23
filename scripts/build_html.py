@@ -125,7 +125,7 @@ HTML = r"""<!doctype html>
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text);
     font-family: var(--font); -webkit-font-smoothing: antialiased;
-    font-size: 15px; line-height: 1.47; }
+    font-size: 15px; line-height: 1.47; max-width:100%; overflow-x:clip; }
   a { color: var(--accent); text-decoration: none; }
   a:hover { text-decoration: underline; }
 
@@ -160,6 +160,7 @@ HTML = r"""<!doctype html>
   .source-link { font-weight: 600; white-space: nowrap; }
   .source-link:hover { text-decoration: none; background: rgba(0,102,204,0.14); }
   @media (max-width: 980px) { .topbar .right .stat-pill { display: none; } .topbar .right .stat-pill.accent { display: inline-block; } }
+  @media (max-width: 600px) { .topbar .inner { padding:0 12px; gap:8px; } .topbar .meta { display:none; } .brand { font-size:15px; } }
 
   /* Layout */
   .layout {
@@ -168,7 +169,8 @@ HTML = r"""<!doctype html>
     align-items: start;
   }
   @media (max-width: 1200px) { .layout { grid-template-columns: 200px minmax(0, 1fr); gap: 24px; } }
-  @media (max-width: 980px)  { .layout { grid-template-columns: 1fr; padding: 0 16px; } }
+  @media (max-width: 980px)  { .layout { grid-template-columns: 168px minmax(0, 1fr); gap:16px; padding: 0 12px; } }
+  @media (max-width: 640px)  { .layout { grid-template-columns: 1fr; padding: 0 12px; } }
   @media (max-width: 600px)  { .layout { padding: 0 12px; } main { padding-top: 14px; } }
 
   /* Sidebar */
@@ -178,7 +180,16 @@ HTML = r"""<!doctype html>
     max-height: calc(100vh - 64px);
     overflow-y: auto;
   }
-  @media (max-width: 980px) { aside.sidebar { position: static; max-height: none; padding: 12px 0 0; } }
+  @media (max-width: 640px) {
+    aside.sidebar {
+      position:sticky; top:52px; z-index:45; max-height:none;
+      display:flex; gap:4px; overflow-x:auto; overflow-y:hidden;
+      padding:8px 0; background:rgba(255,255,255,.94);
+      border-bottom:1px solid var(--border-soft);
+      backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+    }
+    .sidebar h4 { display:none; }
+  }
   .sidebar h4 {
     font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em;
     color: var(--muted); margin: 18px 0 6px; font-weight: 600;
@@ -249,6 +260,10 @@ HTML = r"""<!doctype html>
   }
   .sidebar a:hover { background: var(--bg-alt); text-decoration: none; color: var(--text); }
   .sidebar a.active { color: var(--accent); border-left-color: var(--accent); background: var(--accent-soft); }
+  @media (max-width: 640px) {
+    .sidebar a { flex:0 0 auto; border-left:0; border-bottom:2px solid transparent; padding:6px 9px; }
+    .sidebar a.active { border-left-color:transparent; border-bottom-color:var(--accent); }
+  }
 
   /* Main */
   main { padding: 28px 0 80px; min-width: 0; }
@@ -600,6 +615,88 @@ HTML = r"""<!doctype html>
   .heatmap .cell .v { pointer-events: none; }
   /* Use white text on darker cells (intensity > 0.55) */
   .heatmap .cell.dark { color: #fff; }
+
+  /* PI / Lab radar */
+  .lab-toolbar { display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin:16px 0 12px; }
+  .lab-toolbar input {
+    flex:1 1 260px; min-width:0; height:42px; padding:0 13px;
+    appearance:none; border:1px solid var(--border); border-radius:10px;
+    background:var(--panel); color:var(--text); font:inherit; font-size:13px;
+    box-shadow:0 1px 2px rgba(0,0,0,.03); transition:.15s ease;
+  }
+  .lab-toolbar input::placeholder { color:var(--muted-2); }
+  .lab-toolbar input:focus { outline:3px solid rgba(0,102,204,.16); border-color:var(--accent); }
+  .lab-tabs {
+    display:inline-flex; gap:3px; flex-wrap:wrap; padding:4px;
+    background:var(--bg-alt); border:1px solid var(--border-soft); border-radius:12px;
+  }
+  .lab-tabs .tab {
+    appearance:none; border:1px solid transparent; border-radius:8px;
+    background:transparent; color:var(--text-2); padding:9px 12px;
+    font:inherit; font-size:12px; line-height:1.2; font-weight:650;
+    white-space:nowrap; cursor:pointer; transition:background .15s ease,color .15s ease,box-shadow .15s ease,transform .15s ease;
+  }
+  .lab-tabs .tab:hover { color:var(--accent); background:rgba(255,255,255,.78); }
+  .lab-tabs .tab:active { transform:translateY(1px); }
+  .lab-tabs .tab.active {
+    color:#fff; background:var(--accent); border-color:var(--accent);
+    box-shadow:0 2px 8px rgba(0,102,204,.24);
+  }
+  .lab-tabs .tab:focus-visible { outline:3px solid rgba(0,102,204,.22); outline-offset:2px; }
+  @media (max-width:760px) {
+    .lab-tabs { width:100%; }
+    .lab-tabs .tab { flex:1 1 100%; }
+    .lab-toolbar input { flex-basis:100%; }
+  }
+  .lab-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+  @media (max-width:900px) { .lab-grid { grid-template-columns:1fr; } }
+  .lab-card { text-align:left; cursor:pointer; background:var(--panel); border:1px solid var(--border-soft); border-radius:14px; padding:16px; color:var(--text); transition:.15s ease; }
+  .lab-card:hover, .lab-card.selected { border-color:var(--accent); box-shadow:var(--shadow); transform:translateY(-1px); }
+  .lab-card-head { display:flex; justify-content:space-between; gap:12px; align-items:flex-start; }
+  .lab-name { font-size:16px; font-weight:700; letter-spacing:-.01em; }
+  .lab-aff { color:var(--muted); font-size:12px; margin-top:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:360px; }
+  .tier-badge { flex:0 0 auto; border-radius:999px; padding:3px 8px; font-size:11px; font-weight:700; }
+  .tier-S { color:#8a3d00; background:#fff0df; } .tier-A { color:#0066cc; background:var(--accent-soft); } .tier-B { color:#5b5b60; background:var(--bg-alt); }
+  .tier-badge .stars { letter-spacing:1px; font-size:12px; }
+  .lab-metrics-mini { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:6px; margin:12px 0; }
+  @media (max-width:520px) { .lab-metrics-mini { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+  .lab-metric-mini { background:var(--bg-soft); border-radius:8px; padding:8px; }
+  .lab-metric-mini b { display:block; font-size:17px; } .lab-metric-mini span { display:block; color:var(--muted); font-size:10px; margin-top:2px; }
+  .lab-line { color:var(--text-2); font-size:12px; line-height:1.45; margin-top:7px; }
+  .lab-line strong { color:var(--muted); font-size:10px; letter-spacing:.05em; text-transform:uppercase; margin-right:5px; }
+  .lab-rep { margin-top:5px; color:var(--muted); font-size:11px; line-height:1.4; }
+  .lab-detail { margin-top:18px; border:1px solid rgba(0,102,204,.24); background:linear-gradient(135deg,#fbfdff,#f5f9ff); border-radius:16px; padding:22px; }
+  .lab-detail[hidden] { display:none; }
+  .lab-detail-head { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; }
+  @media (max-width:600px) { .lab-detail { padding:16px; } .lab-detail-head { flex-wrap:wrap; } .lab-detail-head .btn-clear { width:100%; } }
+  .lab-detail h3 { margin:0; color:var(--text); font-size:22px; text-transform:none; letter-spacing:-.015em; }
+  .lab-kpis { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin:16px 0; }
+  @media (max-width:650px) { .lab-kpis { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+  .lab-kpi { background:rgba(255,255,255,.85); border:1px solid var(--border-soft); border-radius:10px; padding:12px; }
+  .lab-kpi b { font-size:24px; display:block; } .lab-kpi span { color:var(--muted); font-size:11px; }
+  .lab-detail-grid { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:14px; }
+  @media (max-width:850px) { .lab-detail-grid { grid-template-columns:1fr; } }
+  .lab-panel { background:rgba(255,255,255,.82); border:1px solid var(--border-soft); border-radius:12px; padding:15px; min-width:0; }
+  .lab-panel h4 { margin:0 0 10px; font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:.07em; }
+  .theme-chips { display:flex; gap:6px; flex-wrap:wrap; }
+  .theme-chip { border-radius:999px; background:var(--accent-soft); color:var(--accent); padding:5px 9px; font-size:12px; font-weight:600; }
+  .kw-bars { display:grid; gap:7px; }
+  .kw-bar-row { display:grid; grid-template-columns:minmax(90px,1.4fr) 2fr 28px; gap:8px; align-items:center; font-size:11px; }
+  .kw-bar-row .track { height:7px; background:var(--bg-alt); border-radius:999px; overflow:hidden; }
+  .kw-bar-row .fill { height:100%; background:var(--accent); border-radius:999px; }
+  .coauthor-net { width:100%; height:270px; display:block; }
+  .coauthor-net .edge { stroke:#c8d8ea; stroke-width:1.5; }
+  .coauthor-net .node { fill:#fff; stroke:var(--accent); stroke-width:1.5; }
+  .coauthor-net .pi-node { fill:var(--accent); stroke:var(--accent); }
+  .coauthor-net text { font-size:10px; fill:var(--text-2); text-anchor:middle; }
+  .coauthor-net .pi-label { fill:#fff; font-weight:700; }
+  .lab-papers { display:grid; gap:8px; margin-top:14px; }
+  .lab-paper { background:#fff; border:1px solid var(--border-soft); border-radius:10px; padding:11px 12px; cursor:pointer; }
+  .lab-paper:hover { border-color:var(--accent); }
+  .lab-paper.rep { border-left:3px solid var(--accent); }
+  .lab-paper .meta { color:var(--muted); font-size:11px; margin-bottom:4px; }
+  .lab-paper .t { font-size:13px; font-weight:600; line-height:1.4; }
+  .overlap-high { color:var(--green); } .overlap-medium { color:var(--accent); } .overlap-expand { color:var(--purple); }
 </style>
 </head>
 <body>
@@ -631,6 +728,8 @@ HTML = r"""<!doctype html>
     <a href="#eda-country">Institution region</a>
     <a href="#eda-heatmap">Country × Topic</a>
     <a href="#eda-misc">Day · authors</a>
+    <h4>Research Radar</h4>
+    <a href="#lab-radar">PI / Lab Radar</a>
     <h4>Search</h4>
     <a href="#search">Find papers</a>
   </aside>
@@ -782,6 +881,23 @@ HTML = r"""<!doctype html>
           <div class="chart-box short"><canvas id="authorsChart"></canvas></div>
         </div>
       </div>
+    </section>
+
+    <section id="lab-radar">
+      <h2>PI / Lab Radar <span class="pill">100 recommended PIs</span></h2>
+      <div class="section-sub">Switch from papers to research programs. <strong>★★★ / ★★ / ★ indicates APRL relevance only</strong>—how closely each group's indexed IROS 2026 work connects to APRL's radar priorities: 3D perception, persistent mapping/localization, navigation, embodied AI/VLA, multi-robot systems, and physical intelligence. It is not an evaluation or ranking of the PI or lab. Last-author is a useful but imperfect PI proxy.</div>
+      <div class="lab-toolbar">
+        <div class="lab-tabs" id="labTierTabs">
+          <button class="tab active" data-labtier="S">★★★ · closest (20)</button>
+          <button class="tab" data-labtier="A">★★ · adjacent (30)</button>
+          <button class="tab" data-labtier="B">★ · broader radar (50)</button>
+          <button class="tab" data-labtier="all">All 100</button>
+        </div>
+        <input type="text" id="labSearch" placeholder="Search PI, affiliation, theme, or paper title…" aria-label="Search recommended PIs" />
+      </div>
+      <div class="footnote" id="labCount"></div>
+      <div class="lab-grid" id="labGrid"></div>
+      <div class="lab-detail" id="labDetail" hidden></div>
     </section>
 
     <section id="search">
@@ -1095,6 +1211,47 @@ for (const p of PAPERS) {
 const uniqAffs = affCount.size;
 const uniqCountries = Array.from(countryCount.keys()).filter(c => c !== "Other").length;
 const totalAuthorSlots = PAPERS.reduce((s,p)=> s + p.authors.length, 0);
+
+// Curated research radar. Three/two/one stars reflect APRL relevance—not PI/lab quality—while
+// every metric/theme below is derived live from the official program data.
+const LAB_TIERS = {
+  S: [
+    "Valada, Abhinav","Hutter, Marco","Xiao, Xuesu","Ma, Jun","She, Yu",
+    "Huang, Guoquan (Paul)","Myung, Hyun","Kim, Ayoung","Civera, Javier","Scherer, Sebastian",
+    "Seita, Daniel","Wang, Xiaolong","Li, Jiaoyang","Loianno, Giuseppe","Zhou, Boyu",
+    "Gao, Fei","How, Jonathan","Ames, Aaron","Okada, Kei","Yuan, Wenzhen"
+  ],
+  A: [
+    "Parasuraman, Ramviyas","Sukhatme, Gaurav","Su, Hao","Atanasov, Nikolay","Ghaffari, Maani",
+    "Krishna, Madhava","Scaramuzza, Davide","Stachniss, Cyrill","Kaess, Michael","Carlone, Luca",
+    "Burgard, Wolfram","Bennewitz, Maren","Leutenegger, Stefan","Cadena, Cesar","Milford, Michael J",
+    "Leonard, John","Martín-Martín, Roberto","Fox, Dieter","Agrawal, Pulkit","Srinivasa, Siddhartha",
+    "Kumar, Vijay","Xie, Lihua","Zhou, Lifeng","Yazicioglu, Yasin","Manocha, Dinesh",
+    "Schwager, Mac","Tokekar, Pratap","Belta, Calin","Kavraki, Lydia","Alexis, Kostas"
+  ],
+  B: [
+    "Malik, Jitendra","Kaelbling, Leslie","Tellex, Stefanie","Nikolaidis, Stefanos","Abbeel, Pieter",
+    "Ramanan, Deva","Zhu, Jun-Yan","Jayaraman, Dinesh","Kroemer, Oliver","Pappas, George J.",
+    "Agha-mohammadi, Ali-akbar","Martinez, Sonia","Kawaharazuka, Kento","Knoll, Alois","Yip, Michael C.",
+    "Ren, Hongliang","Rus, Daniela","Laschi, Cecilia","Tomizuka, Masayoshi","Pucci, Daniele",
+    "Katzschmann, Robert Kevin","Park, Jaeheung","Kim, H. Jin","Chung, Soon-Jo","Kum, Dongsuk",
+    "Choi, Sungjoon","Akbari Hamed, Kaveh","Stuart, Hannah","Majidi, Carmel","Zhang, Fumin",
+    "Yang, Kailun","Ogata, Tetsuya","Liu, Changliu","Choset, Howie","Min, Byung-Cheol",
+    "Sartoretti, Guillaume Adrien","Vidal-Calleja, Teresa A.","Berenson, Dmitry","Saska, Martin","Shim, David Hyunchul",
+    "Wang, Ziran","Lin, Ming C.","Liu, Yong","Qin, Tong","Harada, Kensuke",
+    "Zhang, Shiqi","Vasudevan, Ram","Ichnowski, Jeffrey","Qian, Feifei","Oh, Jean"
+  ]
+};
+const LAB_PI_BY_NAME = new Map(Object.entries(LAB_TIERS).flatMap(([tier,names]) => names.map(name => [name,{name,tier}])));
+const LAB_STARS = {S:"★★★",A:"★★",B:"★"};
+const OVERLAP_AXES = [
+  ["SLAM / localization", /\b(slam|locali[sz]|odometr|state estimation|place recognition|loop closure|vio|lio)\b/i, 3],
+  ["3D / mapping", /\b(3d|4d|mapping|point cloud|gaussian|depth|reconstruction|occupancy|scene graph)\b/i, 3],
+  ["navigation / planning", /\b(navigation|planning|traversability|trajectory|exploration|path finding)\b/i, 2],
+  ["embodied AI / VLA", /\b(vision.language|vla|vlm|llm|embodied|world model|foundation model)\b/i, 2],
+  ["multi-robot / aerial", /\b(multi.robot|multi.agent|swarm|uav|aerial|drone|quadrotor)\b/i, 1.5],
+  ["physical intelligence", /\b(manipulation|tactile|humanoid|locomotion|dexterous|control)\b/i, 1]
+];
 
 // Populate dynamic counts
 document.getElementById("lede-count").textContent = N.toLocaleString();
@@ -1630,6 +1787,137 @@ let PAGE = 50;
 let page = 0;
 let filtered = PAPERS;
 function escapeHTML(s){ return s.replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[ch])); }
+
+let activeLabTier = "S";
+let selectedLabPI = "";
+function paperOverlap(p) {
+  const text = [p.title, ...(p.keywords||[]), ...(p.tags||[])].join(" ");
+  return OVERLAP_AXES.reduce((score,[_,re,w]) => score + (re.test(text) ? w : 0), 0);
+}
+function buildLabProfile(name, tier) {
+  const papers = PAPERS.filter(p => p.authors.some(a => a.name === name));
+  const lastPapers = papers.filter(p => p.authors.length && p.authors[p.authors.length-1].name === name);
+  const firstAuthors = new Set(papers.map(p => p.authors[0]?.name).filter(n => n && n !== name));
+  const kw = new Map(), tag = new Map(), co = new Map(), aff = new Map(), axes = [];
+  for (const p of papers) {
+    for (const k of new Set(p.keywords||[])) kw.set(k,(kw.get(k)||0)+1);
+    for (const t of new Set(p.tags||[])) tag.set(t,(tag.get(t)||0)+1);
+    for (const a of p.authors) {
+      if (a.name !== name) co.set(a.name,(co.get(a.name)||0)+1);
+      else aff.set(a.aff,(aff.get(a.aff)||0)+1);
+    }
+  }
+  const sortedKw = Array.from(kw.entries()).sort((a,b)=>b[1]-a[1] || a[0].localeCompare(b[0]));
+  const sortedTags = Array.from(tag.entries()).sort((a,b)=>b[1]-a[1] || a[0].localeCompare(b[0]));
+  const themes = Array.from(new Set([...sortedKw.map(x=>x[0]),...sortedTags.map(x=>x[0])])).slice(0,5);
+  for (const [axis,re] of OVERLAP_AXES) {
+    const count = papers.filter(p => re.test([p.title,...(p.keywords||[]),...(p.tags||[])].join(" "))).length;
+    if (count) axes.push([axis,count]);
+  }
+  const overlapScore = axes.reduce((sum,[axis,count]) => {
+    const weight = OVERLAP_AXES.find(x=>x[0]===axis)?.[2] || 1;
+    return sum + Math.min(count,3)*weight;
+  },0);
+  const overlap = overlapScore >= 10 ? "High" : overlapScore >= 4 ? "Medium" : "Expand";
+  const representatives = papers.slice().sort((a,b) =>
+    (b.sessionType === "Award Candidates") - (a.sessionType === "Award Candidates") ||
+    (b.authors.at(-1)?.name === name) - (a.authors.at(-1)?.name === name) ||
+    paperOverlap(b) - paperOverlap(a) || a.paper_number.localeCompare(b.paper_number)
+  ).slice(0,3);
+  return {
+    name,tier,papers,lastPapers,firstAuthors,kw:sortedKw,
+    coauthors:Array.from(co.entries()).sort((a,b)=>b[1]-a[1] || a[0].localeCompare(b[0])),
+    affiliation:Array.from(aff.entries()).sort((a,b)=>b[1]-a[1])[0]?.[0] || "Affiliation unavailable",
+    themes, topicDiversity:kw.size, axes, overlap, overlapScore, representatives
+  };
+}
+const LAB_PROFILES = Array.from(LAB_PI_BY_NAME.values()).map(x => buildLabProfile(x.name,x.tier));
+const LAB_PROFILE_BY_NAME = new Map(LAB_PROFILES.map(x => [x.name,x]));
+
+function shortTitle(title, max=88) { return title.length > max ? title.slice(0,max-1).trimEnd()+"…" : title; }
+function overlapHTML(profile) {
+  const axes = profile.axes.slice(0,3).map(([a,n])=>`${escapeHTML(a)} (${n})`).join(" · ") || "broader APRL radar";
+  return `<span class="overlap-${profile.overlap.toLowerCase()}">${profile.overlap}</span> · ${axes}`;
+}
+function renderLabCards() {
+  const q = normalizeSearchText(document.getElementById("labSearch").value);
+  const rows = LAB_PROFILES.filter(p => (activeLabTier === "all" || p.tier === activeLabTier) && (!q || normalizeSearchText([
+    p.name,p.affiliation,...p.themes,...p.axes.map(x=>x[0]),...p.papers.map(x=>x.title)
+  ].join(" ")).includes(q))).sort((a,b)=>b.papers.length-a.papers.length || b.lastPapers.length-a.lastPapers.length || a.name.localeCompare(b.name));
+  document.getElementById("labCount").textContent = `${rows.length} PIs shown · topic diversity = unique author-declared keywords · click a card to open the lab view and load all matching papers below`;
+  document.getElementById("labGrid").innerHTML = rows.map(p => `<button type="button" class="lab-card${selectedLabPI===p.name?" selected":""}" data-labpi="${escapeHTML(p.name)}">
+    <div class="lab-card-head"><div><div class="lab-name">${escapeHTML(p.name)}</div><div class="lab-aff">${escapeHTML(p.affiliation)}</div></div><span class="tier-badge tier-${p.tier}">APRL relevance <span class="stars">${LAB_STARS[p.tier]}</span></span></div>
+    <div class="lab-metrics-mini">
+      <div class="lab-metric-mini"><b>${p.papers.length}</b><span>IROS26 papers</span></div>
+      <div class="lab-metric-mini"><b>${p.lastPapers.length}</b><span>last-author</span></div>
+      <div class="lab-metric-mini"><b>${p.firstAuthors.size}</b><span>first authors</span></div>
+      <div class="lab-metric-mini"><b>${p.topicDiversity}</b><span>topic diversity</span></div>
+    </div>
+    <div class="lab-line"><strong>Themes</strong>${escapeHTML(p.themes.slice(0,4).join(" · ") || "Insufficient keyword data")}</div>
+    <div class="lab-line"><strong>Your overlap</strong>${overlapHTML(p)}</div>
+    <div class="lab-rep"><strong>Start with</strong> ${p.representatives.slice(0,2).map(x=>escapeHTML(shortTitle(x.title,64))).join(" · ")}</div>
+  </button>`).join("") || `<div class="card" style="grid-column:1/-1;text-align:center;color:var(--muted)">No recommended PI matches this search.</div>`;
+  document.querySelectorAll(".lab-card[data-labpi]").forEach(el => el.addEventListener("click",()=>selectLabPI(el.dataset.labpi)));
+}
+function coauthorNetworkSVG(profile) {
+  const nodes = profile.coauthors.slice(0,8), cx=210, cy=135, radius=96;
+  const points = nodes.map((x,i)=>({name:x[0],count:x[1],x:cx+radius*Math.cos(-Math.PI/2+i*2*Math.PI/nodes.length),y:cy+radius*Math.sin(-Math.PI/2+i*2*Math.PI/nodes.length)}));
+  const edges = points.map(p=>`<line class="edge" x1="${cx}" y1="${cy}" x2="${p.x.toFixed(1)}" y2="${p.y.toFixed(1)}"/>`).join("");
+  const circles = points.map(p=>`<g><circle class="node" cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${Math.min(18,10+p.count*2)}"/><text x="${p.x.toFixed(1)}" y="${(p.y+27).toFixed(1)}">${escapeHTML(p.name.split(",")[0])} · ${p.count}</text></g>`).join("");
+  return `<svg class="coauthor-net" viewBox="0 0 420 270" role="img" aria-label="Top coauthor network for ${escapeHTML(profile.name)}">${edges}${circles}<circle class="pi-node" cx="${cx}" cy="${cy}" r="34"/><text class="pi-label" x="${cx}" y="${cy-2}">${escapeHTML(profile.name.split(",")[0])}</text><text class="pi-label" x="${cx}" y="${cy+12}">PI</text></svg>`;
+}
+function syncLabPaperSearch(profile, shouldScroll=false) {
+  setPrimarySearch(profile.name);
+  document.getElementById("searchMode").value = "and";
+  document.getElementById("dayFilter").value = "";
+  document.getElementById("sessionTypeFilter").value = "";
+  document.getElementById("topicFilter").value = "";
+  document.getElementById("countryFilter").value = "";
+  document.getElementById("affFilter").value = "";
+  document.getElementById("sortFilter").value = "default";
+  authorCountFilter = null;
+  applyFilter();
+  if (shouldScroll) maybeScrollToSearch();
+}
+function selectLabPI(name, shouldScroll=true, syncPaperSearch=true) {
+  const p = LAB_PROFILE_BY_NAME.get(name); if (!p) return;
+  selectedLabPI = name;
+  const maxKw = p.kw[0]?.[1] || 1;
+  const summary = p.themes.length
+    ? `The indexed program spans ${p.themes.slice(0,-1).join(", ")}${p.themes.length>1?", and ":""}${p.themes.at(-1)}. ${p.lastPapers.length} of ${p.papers.length} papers list this PI last; treat this as a group-program signal, not proof of supervision.`
+    : "The program has too little declared-keyword data for a reliable automatic theme summary.";
+  const reps = new Set(p.representatives.map(x=>x.code));
+  const detail = document.getElementById("labDetail");
+  detail.hidden = false;
+  detail.innerHTML = `<div class="lab-detail-head"><div><span class="tier-badge tier-${p.tier}">APRL relevance <span class="stars">${LAB_STARS[p.tier]}</span></span><h3>${escapeHTML(p.name)}</h3><div class="lab-aff">${escapeHTML(p.affiliation)}</div></div><button class="btn-clear" id="labToSearch">${p.papers.length} papers loaded below ↓</button></div>
+    <div class="lab-kpis">
+      <div class="lab-kpi"><b>${p.papers.length}</b><span>Total papers</span></div><div class="lab-kpi"><b>${p.lastPapers.length}</b><span>Last-author papers</span></div>
+      <div class="lab-kpi"><b>${p.firstAuthors.size}</b><span>Unique first authors (PI excluded)</span></div><div class="lab-kpi"><b>${p.topicDiversity}</b><span>Topic diversity (unique keywords)</span></div>
+    </div>
+    <div class="lab-panel" style="margin-bottom:14px"><h4>Automatic research-program summary</h4><div class="theme-chips">${p.themes.map(x=>`<span class="theme-chip">${escapeHTML(x)}</span>`).join("")}</div><p style="font-size:13px;line-height:1.55;margin:12px 0 6px">${escapeHTML(summary)}</p><div class="lab-line"><strong>Your overlap</strong>${overlapHTML(p)}</div></div>
+    <div class="lab-detail-grid">
+      <div class="lab-panel"><h4>Coauthor network · top 8</h4>${coauthorNetworkSVG(p)}</div>
+      <div class="lab-panel"><h4>Keyword distribution</h4><div class="kw-bars">${p.kw.slice(0,10).map(([k,n])=>`<div class="kw-bar-row"><span>${escapeHTML(k)}</span><span class="track"><span class="fill" style="display:block;width:${n/maxKw*100}%"></span></span><b>${n}</b></div>`).join("")}</div></div>
+    </div>
+    <div class="lab-papers"><h4 style="margin:4px 0 0">All ${p.papers.length} indexed papers · representative picks marked</h4>${p.papers.map(x=>`<div class="lab-paper${reps.has(x.code)?" rep":""}" data-labpaper="${escapeHTML(x.code)}"><div class="meta">${reps.has(x.code)?"REPRESENTATIVE · ":""}${escapeHTML(x.day)} ${escapeHTML(x.time)} · ${escapeHTML(x.sessionType)} · ${escapeHTML(x.code)}</div><div class="t">${escapeHTML(x.title)}</div></div>`).join("")}</div>`;
+  document.getElementById("labToSearch").addEventListener("click",()=>syncLabPaperSearch(p,true));
+  detail.querySelectorAll("[data-labpaper]").forEach(el=>el.addEventListener("click",()=>jumpToPaper(el.dataset.labpaper)));
+  renderLabCards();
+  if (syncPaperSearch) syncLabPaperSearch(p,false);
+  if (shouldScroll) detail.scrollIntoView({behavior:"smooth",block:"start"});
+}
+function initLabRadar() {
+  const counts = Object.fromEntries(Object.entries(LAB_TIERS).map(([k,v])=>[k,v.length]));
+  if (counts.S!==20 || counts.A!==30 || counts.B!==50 || LAB_PROFILE_BY_NAME.size!==100) console.error("APRL relevance inventory mismatch",counts,LAB_PROFILE_BY_NAME.size);
+  document.querySelectorAll("[data-labtier]").forEach(btn=>btn.addEventListener("click",()=>{
+    activeLabTier=btn.dataset.labtier;
+    document.querySelectorAll("[data-labtier]").forEach(x=>x.classList.toggle("active",x===btn));
+    renderLabCards();
+  }));
+  document.getElementById("labSearch").addEventListener("input",renderLabCards);
+  renderLabCards();
+  selectLabPI("Valada, Abhinav",false,false);
+}
 // Highlight on plain text only — escapes HTML, then wraps matches with <mark>.
 // Pass plain (un-escaped) text in. Returns safe HTML.
 function hl(text, terms){
@@ -1773,10 +2061,15 @@ function render() {
       maybeScrollToSearch();
     });
   });
-  // author name click → seed search query with that name (no exact-author filter)
+  // Curated PI clicks open the lab-centric view; other authors retain the
+  // original paper-search behavior.
   wrap.querySelectorAll(".paper .authors b[data-author]").forEach(el => {
     el.addEventListener("click", (e) => {
       e.stopPropagation();
+      if (LAB_PROFILE_BY_NAME.has(el.dataset.author)) {
+        selectLabPI(el.dataset.author);
+        return;
+      }
       setPrimarySearch(el.dataset.author);
       applyFilter();
       maybeScrollToSearch();
@@ -2142,11 +2435,12 @@ document.getElementById("clearFilters").addEventListener("click", () => {
   applyFilter();
 });
 
+initLabRadar();
 loadFromURL();
 applyFilter();
 
 // Sidebar active link tracking
-const sectionIds = ["overview","stats","trends","kw-trends","eda-aff","eda-misc","search"];
+const sectionIds = ["overview","submissions","stats","kw-trends","trends","eda-aff","eda-heatmap","eda-misc","lab-radar","search"];
 const navLinks = Array.from(document.querySelectorAll(".sidebar a"));
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(en => {

@@ -6,7 +6,9 @@ Live site: <https://gisbi-kim.github.io/iros2026-explorer/>
 
 Features include title/author/affiliation/keyword search, day and session filters,
 topic and country summaries, submission and acceptance context, sortable results,
-and shareable filter URLs.
+and shareable filter URLs. A PI / Lab Radar adds a curated 100-PI APRL-relevance watchlist (three/two/one stars indicate research fit, not PI or lab quality),
+per-PI program metrics, automatically derived themes, keyword distributions,
+coauthor networks, overlap signals, and representative-paper shortcuts.
 
 ## Counting scope
 

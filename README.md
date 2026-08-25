@@ -30,6 +30,10 @@ python scripts/build_html.py
 
 The generated standalone page is `output/iros2026_explorer.html`.
 
+## Analysis
+
+- VLM/VLA research landscape review: <https://gisbi-kim.github.io/iros2026-explorer/output/iros2026_vlm_vla_landscape_review.html>
+
 ## Source
 
 - <https://2026.ieee-iros.org/program/paper_index/>

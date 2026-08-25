@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IROS 2026 VLM/VLA 연구 지형 평론</title>
+  <style>
+    html { background: #fff; color: #111; }
+    body {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 24px 64px;
+      background: #fff;
+      color: #111;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", Arial, sans-serif;
+      font-size: 17px;
+      line-height: 1.75;
+    }
+    h1 { margin: 0 0 1.2em; font-size: 2.2em; line-height: 1.25; }
+    h2 {
+      margin: 2.8em 0 0.8em;
+      padding-top: 1.35em;
+      border-top: 1px solid #c9c9c9;
+      font-size: 1.65em;
+      line-height: 1.35;
+    }
+    h1 + h2 { margin-top: 2.2em; }
+    h3 { margin: 1.8em 0 0.6em; font-size: 1.25em; line-height: 1.4; }
+    p { margin: 0.8em 0; }
+    ul, ol { margin: 0.8em 0; padding-left: 1.6em; }
+    li { margin: 0.25em 0; }
+    blockquote {
+      margin: 1.2em 0;
+      padding-left: 1em;
+      border-left: 4px solid #bbb;
+    }
+    table { width: 100%; border-collapse: collapse; margin: 1.2em 0; }
+    th, td { padding: 0.55em 0.7em; border: 1px solid #bbb; text-align: left; vertical-align: top; }
+    code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .equation { margin: 1.2em 0; text-align: center; font-family: Georgia, serif; }
+    .source-note {
+      margin: -0.35em 0 2.2em;
+      padding: 0.85em 1em;
+      background: #f6f7f8;
+      border-left: 3px solid #6b7280;
+      color: #3f4650;
+      font-size: 0.92em;
+    }
+    .source-note a { color: #1d4ed8; }
+  </style>
+</head>
+<body>
+  <article>
+    <h1>IROS 2026 VLM/VLA 연구 지형 평론</h1>
+
+    <p class="source-note">이 평론의 논문 수, 세션 분포, 제목 기반 분류와 연구 흐름 분석은 <a href="https://gisbi-kim.github.io/iros2026-explorer/output/iros2026_explorer.html?q=vlm#search">IROS 2026 Explorer의 VLM 검색 결과</a>를 분석 재료로 삼아 작성했습니다.</p>
+
+    <h2>한 줄 총평</h2>
+
+    <blockquote>
+      <p><strong>IROS 2026은 VLM의 가능성을 보여주는 단계에서, 불완전하고 느린 foundation model을 실제 로봇 시스템의 일부로 길들이는 단계로 넘어간 학회로 보인다.</strong></p>
+    </blockquote>
+
+    <p>핵심 질문이 바뀌었다.</p>
+
+    <ul>
+      <li>과거: “VLM이 로봇 작업을 이해할 수 있는가?”</li>
+      <li>현재: “VLM을 3D 공간, 제어, 기억, 안전, 실시간 계산과 어떻게 결합할 것인가?”</li>
+    </ul>
+
+    <p>따라서 2026년의 중요한 변화는 모델 성능 자체보다 <strong>embodied systems engineering의 부상</strong>이다.</p>
+
+    <h2>1. 먼저 숫자를 정확히 해석해야 한다</h2>
+
+    <p><code>VLM</code> 검색 결과는 143편으로, 전체 1,933편의 약 <strong>7.4%</strong>다. 하지만 이것을 그대로 “VLM 논문 143편”이라고 부르기는 어렵다.</p>
+
+    <p>제목을 기준으로 보면 다음과 같다.</p>
+
+    <ul>
+      <li>약 90편이 vision-language, VLM, VLA, VLN을 직접 명시한다.</li>
+      <li>그중 약 50편이 VLA를 직접 다룬다.</li>
+      <li>나머지에는 순수 LLM planning, vision foundation model, world foundation model 등이 포함된다.</li>
+    </ul>
+
+    <p>따라서 안전한 해석은 다음과 같다.</p>
+
+    <blockquote>
+      <p><strong>IROS 2026 전체 논문의 약 5%가 명시적으로 vision-language 계열이고, 그 안에서는 VLA가 최대 하위 분야다.</strong></p>
+    </blockquote>
+
+    <p>143편 중 발표 형식은 다음과 같다.</p>
+
+    <ul>
+      <li>Lightning Talks: 106편</li>
+      <li>Focused Sessions: 32편</li>
+      <li>Award Candidates: 3편</li>
+      <li>Special Sessions: 2편</li>
+    </ul>
+
+    <p>논문 수는 이미 충분히 크지만, 약 74%가 lightning이라는 점은 이 분야가 <strong>빠르게 팽창하는 동시에 아직 논문의 질과 기여 수준이 크게 분산된 상태</strong>라는 것도 보여준다.</p>
+
+    <h2>2. VLM은 이제 하나의 모델이 아니라 시스템 구성요소다</h2>
+
+    <p>초기 VLM 로보틱스 논문은 대체로 다음과 같은 구조였다.</p>
+
+    <blockquote>
+      <p>image + prompt → semantic answer → robot command</p>
+    </blockquote>
+
+    <p>IROS 2026에서는 VLM이 훨씬 다양한 위치에 들어간다.</p>
+
+    <ul>
+      <li>task planner</li>
+      <li>trajectory proposer</li>
+      <li>reward model</li>
+      <li>failure detector</li>
+      <li>safety critic</li>
+      <li>semantic mapper</li>
+      <li>action policy</li>
+      <li>retrieval interface</li>
+      <li>world-state interpreter</li>
+      <li>simulation parameter initializer</li>
+      <li>human–robot communication layer</li>
+    </ul>
+
+    <p>즉, VLM은 더 이상 독립된 perception module이 아니라 <strong>로봇 시스템 전체에 삽입되는 범용 reasoning substrate</strong>가 되었다.</p>
+
+    <p>하지만 이것은 동시에 새로운 문제를 만든다. 같은 foundation model을 사용하더라도 시스템 안에서 어떤 역할을 맡겼는지에 따라 논문의 본질이 완전히 달라지기 때문이다.</p>
+
+    <p>앞으로는 “VLM을 사용했다”가 방법론적 설명이 될 수 없다. 다음을 명확히 해야 한다.</p>
+
+    <ol>
+      <li>VLM이 어떤 정보를 입력받는가?</li>
+      <li>무엇을 추론하는가?</li>
+      <li>어떤 형식으로 결과를 출력하는가?</li>
+      <li>그 결과가 실제 제어에 어떤 영향을 주는가?</li>
+      <li>잘못된 추론을 누가 감지하고 수정하는가?</li>
+    </ol>
+
+    <h2>3. 가장 큰 흐름은 VLM이 아니라 VLA다</h2>
+
+    <p>VLM 관련 제목 중 약 50편이 VLA를 직접 다룬다는 것은 상당히 강한 신호다. VLA 연구는 이미 다음처럼 세분화되었다.</p>
+
+    <ul>
+      <li>diffusion VLA</li>
+      <li>3D-aware VLA</li>
+      <li>hierarchical VLA</li>
+      <li>tactile VLA</li>
+      <li>thermal VLA</li>
+      <li>humanoid VLA</li>
+      <li>surgical VLA</li>
+      <li>efficient VLA</li>
+      <li>safe VLA</li>
+      <li>belief-state VLA</li>
+      <li>memory-augmented VLA</li>
+    </ul>
+
+    <p>이 정도면 VLA는 더 이상 단일 연구 주제가 아니라 <strong>하나의 연구 생태계</strong>다.</p>
+
+    <p>다만 논문 제목에서 우려되는 패턴도 보인다.</p>
+
+    <blockquote>
+      <p>기존 VLA + 새로운 modality 또는 module + 특정 robot platform</p>
+    </blockquote>
+
+    <p>이 조합은 빠르게 포화될 가능성이 크다. 새로운 sensor, masking module, diffusion variant 또는 robot platform을 붙이는 것만으로는 점점 강한 novelty를 주장하기 어려워질 것이다.</p>
+
+    <h3>미래 연구에 대한 함의</h3>
+
+    <p>앞으로 강한 VLA 연구는 다음 중 하나를 가져야 한다.</p>
+
+    <ul>
+      <li>기존 VLA가 원리적으로 실패하는 새로운 문제 정의</li>
+      <li>action generation 이전에 필요한 새로운 state representation</li>
+      <li>장기간 운용에서 발생하는 누적 오류와 adaptation 문제</li>
+      <li>불확실성에 따른 reasoning–action 전환 원리</li>
+      <li>안전성과 계산량을 포함한 명시적인 최적화 문제</li>
+      <li>기존 benchmark로 측정할 수 없는 새로운 평가 축</li>
+    </ul>
+
+    <h2>4. Foundation model이 geometry를 대체한 것이 아니라 geometry를 다시 불러왔다</h2>
+
+    <p>가장 흥미로운 흐름은 3D와 spatial structure의 귀환이다.</p>
+
+    <p>대표적인 방향은 다음과 같다.</p>
+
+    <ul>
+      <li>3D scene token을 VLM에 주입</li>
+      <li>3D representation을 VLA 내부에 통합</li>
+      <li>scene graph 기반 reasoning</li>
+      <li>topological memory 기반 navigation</li>
+      <li>explicit trajectory guidance</li>
+      <li>orthographic 또는 depth representation 사용</li>
+      <li>temporal logic 및 symbolic reasoning 결합</li>
+    </ul>
+
+    <p>특히 VLM 관련 Cognitive Robotics Award Candidate가 다음 세 방향으로 구성된다는 점이 상징적이다.</p>
+
+    <ul>
+      <li>neuro-symbolic reasoning</li>
+      <li>3D scene tokens</li>
+      <li>3D-aware VLA representation</li>
+    </ul>
+
+    <p>이 흐름이 말해주는 것은 명확하다.</p>
+
+    <blockquote>
+      <p><strong>대규모 사전학습은 의미론적 지식을 제공하지만, 로봇이 행동하기 위해 필요한 metric geometry, topology, dynamics, constraints까지 자동으로 해결해주지는 않는다.</strong></p>
+    </blockquote>
+
+    <p>따라서 미래의 강한 시스템은 순수 end-to-end 모델보다는 다음과 같은 hybrid 구조가 될 가능성이 크다.</p>
+
+    <div class="equation">Foundation Model + Structured World State + Predictive Control + Verification</div>
+
+    <p>Foundation model은 semantics와 priors를 제공하고, 로보틱스 구조는 consistency와 controllability를 제공하는 식이다.</p>
+
+    <h2>5. 연구의 중심이 평균 성능에서 계산량과 신뢰성으로 이동하고 있다</h2>
+
+    <p>IROS 2026에는 efficiency 관련 논문이 눈에 띄게 많다.</p>
+
+    <ul>
+      <li>test-time scaling</li>
+      <li>token pruning</li>
+      <li>token merging</li>
+      <li>KV-cache reuse</li>
+      <li>model distillation</li>
+      <li>single-step action generation</li>
+      <li>training-free acceleration</li>
+      <li>event-adaptive invocation</li>
+      <li>slow foundation model과 fast policy의 결합</li>
+    </ul>
+
+    <p>이것은 단순한 경량화 유행이 아니다. VLM/VLA가 실제 control loop에 들어가기 시작했기 때문에 나타나는 구조적 변화다.</p>
+
+    <p>현재 대형 모델은 일반적으로 다음과 같은 특성을 가진다.</p>
+
+    <ul>
+      <li>높은 수준의 판단에는 강하다.</li>
+      <li>실행 주기가 느리다.</li>
+      <li>매 시점 호출하기 비싸다.</li>
+      <li>출력 지연이 불규칙하다.</li>
+      <li>동일한 장면에도 추론 결과가 흔들릴 수 있다.</li>
+    </ul>
+
+    <p>따라서 자연스럽게 다음의 이중 구조가 형성되고 있다.</p>
+
+    <ul>
+      <li><strong>Slow layer:</strong> 의미 해석, 계획, 예외 처리, 재계획</li>
+      <li><strong>Fast layer:</strong> perception, tracking, local control, reactive policy</li>
+    </ul>
+
+    <p>앞으로 중요한 문제는 단순한 가속이 아니라 다음의 의사결정이다.</p>
+
+    <blockquote>
+      <p><strong>언제 깊게 생각하고, 언제 기존 결과를 재사용하며, 언제 즉시 행동해야 하는가?</strong></p>
+    </blockquote>
+
+    <p>이를 정식화하면 다음과 같은 constrained optimization 문제가 된다.</p>
+
+    <div class="equation">max<sub>π</sub> E[Task Utility] − λ<sub>c</sub> Compute − λ<sub>l</sub> Latency − λ<sub>r</sub> Risk</div>
+
+    <p>즉, accuracy만 최대화하는 것이 아니라 <strong>task success–latency–energy–risk의 Pareto frontier</strong>를 다뤄야 한다.</p>
+
+    <h2>6. Safety 연구는 부가 기능에서 독립 연구 분야로 성장하고 있다</h2>
+
+    <p>목록에는 다음과 같은 문제가 반복해서 등장한다.</p>
+
+    <ul>
+      <li>pre-execution safety gate</li>
+      <li>adversarial attack</li>
+      <li>red teaming</li>
+      <li>physical attention hijacking</li>
+      <li>failure prediction</li>
+      <li>runtime rollback</li>
+      <li>safety constraint layer</li>
+      <li>failure recovery</li>
+      <li>diagnostic benchmark</li>
+      <li>self-reflective replanning</li>
+    </ul>
+
+    <p>이것은 분야가 성숙하고 있다는 증거다. 초기에는 성공 사례를 보여주는 것으로 충분했지만, 이제는 다음 질문을 피할 수 없다.</p>
+
+    <ul>
+      <li>언제 실패하는가?</li>
+      <li>실패를 행동 전에 알 수 있는가?</li>
+      <li>실패 후 복구할 수 있는가?</li>
+      <li>confidence가 실제 실패 확률과 일치하는가?</li>
+      <li>공격자가 입력이나 환경을 조작하면 어떻게 되는가?</li>
+    </ul>
+
+    <p>특히 중요한 변화는 안전을 단순한 출력 필터링으로 보지 않는다는 점이다.</p>
+
+    <p>앞으로의 safety stack은 적어도 세 층으로 나뉠 가능성이 크다.</p>
+
+    <ol>
+      <li><strong>Before action:</strong> feasibility·risk verification</li>
+      <li><strong>During action:</strong> anomaly·deviation monitoring</li>
+      <li><strong>After failure:</strong> rollback·replanning·recovery</li>
+    </ol>
+
+    <p>Future work에서는 “unsafe command를 차단했다”보다 <strong>closed-loop failure lifecycle 전체</strong>를 평가해야 강해질 것이다.</p>
+
+    <h2>7. Memory는 중요하지만 아직 개념적으로 정리되지 않았다</h2>
+
+    <p>현재 논문들이 memory라고 부르는 것은 서로 상당히 다르다.</p>
+
+    <ul>
+      <li>context history</li>
+      <li>visual token cache</li>
+      <li>recurrent hidden state</li>
+      <li>belief state</li>
+      <li>episodic retrieval</li>
+      <li>cognitive map</li>
+      <li>scene graph</li>
+      <li>topological memory</li>
+      <li>RAG database</li>
+      <li>in-context demonstration</li>
+    </ul>
+
+    <p>이들을 모두 memory라는 하나의 단어로 묶으면 기여가 불명확해진다.</p>
+
+    <p>앞으로는 memory를 적어도 다음 축으로 분류해야 한다.</p>
+
+    <table>
+      <thead>
+        <tr><th>축</th><th>구분</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>시간 범위</td><td>short-term / episodic / persistent</td></tr>
+        <tr><td>내용</td><td>observation / action / outcome / semantic knowledge</td></tr>
+        <tr><td>표현</td><td>token / latent / metric map / graph / symbolic fact</td></tr>
+        <tr><td>갱신</td><td>append / merge / consolidate / forget</td></tr>
+        <tr><td>검색</td><td>similarity / spatial / temporal / causal</td></tr>
+        <tr><td>목적</td><td>recognition / planning / adaptation / recovery</td></tr>
+      </tbody>
+    </table>
+
+    <p>특히 현재 연구는 짧은 episode 내부의 history나 task-specific memory에 집중되어 있다. 상대적으로 덜 다뤄진 문제는 다음과 같다.</p>
+
+    <ul>
+      <li>장기 운용 중 무엇을 저장하고 버릴 것인가?</li>
+      <li>서로 모순되는 관찰을 어떻게 합칠 것인가?</li>
+      <li>환경 변화와 perception error를 어떻게 구분할 것인가?</li>
+      <li>과거 경험이 현재 행동을 실제로 개선했는가?</li>
+      <li>잘못 저장된 기억을 어떻게 수정할 것인가?</li>
+    </ul>
+
+    <p>따라서 memory 연구에서는 단순히 memory module을 추가하는 것보다 <strong>memory lifecycle 전체를 정의하는 것</strong>이 중요한 future direction이다.</p>
+
+    <h2>8. 플랫폼과 modality 확장은 활발하지만, 그 자체로는 약한 기여가 된다</h2>
+
+    <p>IROS 2026에서는 VLM/VLA가 다음으로 빠르게 확산되고 있다.</p>
+
+    <ul>
+      <li>UAV</li>
+      <li>humanoid</li>
+      <li>autonomous driving</li>
+      <li>surgical robot</li>
+      <li>underwater robot</li>
+      <li>microrobot</li>
+      <li>biomimetic fish</li>
+      <li>dexterous hand</li>
+      <li>agricultural robot</li>
+    </ul>
+
+    <p>센서도 RGB에서 다음으로 확장되고 있다.</p>
+
+    <ul>
+      <li>depth</li>
+      <li>tactile</li>
+      <li>force</li>
+      <li>thermal</li>
+      <li>audio</li>
+      <li>multi-view camera</li>
+    </ul>
+
+    <p>이는 VLA가 범용 interface로 자리 잡고 있다는 긍정적인 신호다. 그러나 “처음으로 VLA를 특정 플랫폼에 적용했다”는 기여는 빠르게 약해질 것이다.</p>
+
+    <p>강한 연구가 되려면 특정 플랫폼이 단순 application domain이 아니라 <strong>새로운 과학적 문제를 발생시키는 이유</strong>가 있어야 한다.</p>
+
+    <p>예를 들면 다음과 같다.</p>
+
+    <ul>
+      <li>UAV: 고속 motion과 제한된 onboard compute</li>
+      <li>surgical robot: 비가역적 실패와 contact uncertainty</li>
+      <li>underwater robot: 제한된 통신과 불완전한 시야</li>
+      <li>humanoid: whole-body dynamics와 balance constraint</li>
+      <li>tactile manipulation: 부분 관측과 contact-state transition</li>
+    </ul>
+
+    <p>즉, 플랫폼 논문은 다음을 보여줘야 한다.</p>
+
+    <blockquote>
+      <p><strong>이 embodiment가 기존 VLM/VLA 가정을 어떻게 깨뜨리는가?</strong></p>
+    </blockquote>
+
+    <h2>9. 현재 많이 보이지만 약해질 가능성이 큰 연구 패턴</h2>
+
+    <p>앞으로는 다음 형태만으로 강한 논문을 만들기 어려워질 것이다.</p>
+
+    <h3>① Prompt engineering 중심 연구</h3>
+    <p>“Structured prompting을 적용했더니 성공률이 올랐다”는 결과는 재현성과 일반화 측면에서 약하다.</p>
+
+    <h3>② Acronym-first architecture</h3>
+    <p>새로운 VLA 이름을 만든 뒤 기존 module 여러 개를 조합하는 방식은 연구 질문이 흐려지기 쉽다.</p>
+
+    <h3>③ Open-loop semantic evaluation</h3>
+    <p>질문 응답 정확도나 planning text quality만 측정하고 실제 closed-loop 행동을 평가하지 않으면 로보틱스 기여가 약하다.</p>
+
+    <h3>④ 새로운 modality만 추가</h3>
+    <p>Depth, thermal, tactile을 추가했다는 사실보다 그 정보가 어떤 failure를 해결했는지가 중요하다.</p>
+
+    <h3>⑤ 평균 success rate만 보고</h3>
+    <p>실패 유형, latency, compute, calibration, recovery를 보고하지 않으면 실제 시스템의 가치를 판단하기 어렵다.</p>
+
+    <h3>⑥ 쉬운 benchmark에서의 소폭 향상</h3>
+    <p>기존 benchmark가 포착하지 못하는 failure mode를 제시하지 못하면 숫자 개선만으로는 설득력이 떨어진다.</p>
+
+    <h2>10. 강한 Future Work를 위한 연구 가이드</h2>
+
+    <h3>A. 모델보다 문제를 먼저 정의해야 한다</h3>
+
+    <p>약한 질문은 다음과 같다.</p>
+
+    <blockquote>
+      <p>VLM을 로봇 navigation에 적용할 수 있는가?</p>
+    </blockquote>
+
+    <p>강한 질문은 다음과 같다.</p>
+
+    <blockquote>
+      <p>부분 관측과 환경 변화가 존재할 때, 로봇은 어떤 관찰을 신뢰하고 언제 추가 정보를 획득해야 하는가?</p>
+    </blockquote>
+
+    <p>방법 이름을 제거해도 의미가 남는 연구 질문이어야 한다.</p>
+
+    <h3>B. VLM과 물리 세계 사이에 구조화된 interface가 필요하다</h3>
+
+    <p>자유형 텍스트를 바로 action으로 바꾸기보다 다음과 같은 중간 표현이 중요해질 것이다.</p>
+
+    <ul>
+      <li>scene graph</li>
+      <li>object-centric state</li>
+      <li>metric/topological map</li>
+      <li>affordance field</li>
+      <li>trajectory token</li>
+      <li>temporal logic</li>
+      <li>constraint set</li>
+      <li>uncertainty-aware belief</li>
+      <li>executable program</li>
+    </ul>
+
+    <p>좋은 interface는 다음 조건을 만족해야 한다.</p>
+
+    <ul>
+      <li>사람이 해석할 수 있다.</li>
+      <li>오류를 검증할 수 있다.</li>
+      <li>수정할 수 있다.</li>
+      <li>downstream controller가 안정적으로 사용할 수 있다.</li>
+    </ul>
+
+    <h3>C. Adaptive computation을 task-level decision으로 다뤄야 한다</h3>
+
+    <p>단순 token pruning보다 중요한 것은 다음과 같다.</p>
+
+    <ul>
+      <li>언제 VLM을 호출할 것인가?</li>
+      <li>어느 크기의 모델을 사용할 것인가?</li>
+      <li>몇 개의 candidate를 생성할 것인가?</li>
+      <li>추가 관찰을 얻을 것인가?</li>
+      <li>이전 reasoning result를 재사용할 것인가?</li>
+    </ul>
+
+    <p>평가 항목도 함께 바뀌어야 한다.</p>
+
+    <ul>
+      <li>task success</li>
+      <li>end-to-end latency</li>
+      <li>average/peak compute</li>
+      <li>energy consumption</li>
+      <li>intervention frequency</li>
+      <li>safety violation rate</li>
+    </ul>
+
+    <h3>D. Uncertainty를 행동과 연결해야 한다</h3>
+
+    <p>VLM의 verbal confidence만으로는 부족하다.</p>
+
+    <p>필요한 것은 다음과 같다.</p>
+
+    <ul>
+      <li>calibration</li>
+      <li>out-of-distribution detection</li>
+      <li>action-conditioned risk estimation</li>
+      <li>ensemble disagreement</li>
+      <li>temporal inconsistency</li>
+      <li>observation–memory conflict</li>
+      <li>conformal 또는 set-valued prediction</li>
+    </ul>
+
+    <p>가장 중요한 것은 uncertainty를 계산하는 것보다 그 uncertainty 때문에 <strong>로봇이 무엇을 다르게 하는지</strong>다.</p>
+
+    <h3>E. Closed-loop recovery를 기본 평가로 포함해야 한다</h3>
+
+    <p>실제 로봇은 실패하지 않는 시스템이 아니라 실패를 관리하는 시스템이다.</p>
+
+    <p>Future work는 최소한 다음 loop를 다뤄야 한다.</p>
+
+    <div class="equation">Act → Monitor → Detect → Diagnose → Recover → Resume</div>
+
+    <p>단일 시도 success rate보다 다음이 더 중요한 지표가 될 수 있다.</p>
+
+    <ul>
+      <li>time to detect</li>
+      <li>recovery success rate</li>
+      <li>number of irreversible failures</li>
+      <li>performance after recovery</li>
+      <li>repeated-failure rate</li>
+    </ul>
+
+    <h3>F. 평가를 long-horizon·distribution shift 중심으로 바꿔야 한다</h3>
+
+    <p>앞으로 필요한 benchmark는 다음 특성을 가져야 한다.</p>
+
+    <ul>
+      <li>수십 분 이상의 operation</li>
+      <li>task sequence 간 dependency</li>
+      <li>unseen object와 scene</li>
+      <li>sensor degradation</li>
+      <li>viewpoint와 embodiment 변화</li>
+      <li>instruction ambiguity</li>
+      <li>환경의 동적 변화</li>
+      <li>adversarial 또는 misleading observation</li>
+      <li>제한된 compute와 communication</li>
+      <li>실패 후 재시도</li>
+    </ul>
+
+    <p>짧고 독립적인 manipulation episode만으로는 memory, reasoning, safety의 진짜 가치를 측정하기 어렵다.</p>
+
+    <h2>향후 2–3년 전망</h2>
+
+    <p>IROS 2026의 프로그램을 기반으로 보면 다음과 같은 이동이 예상된다.</p>
+
+    <h3>감소할 가능성이 큰 것</h3>
+
+    <ul>
+      <li>단순 zero-shot VLM application</li>
+      <li>prompt engineering 중심 방법</li>
+      <li>새로운 VLA acronym만 제안하는 논문</li>
+      <li>open-loop 계획 생성 평가</li>
+      <li>특정 플랫폼 최초 적용 주장</li>
+    </ul>
+
+    <h3>증가할 가능성이 큰 것</h3>
+
+    <ul>
+      <li>3D·object-centric·world-state representation</li>
+      <li>fast/slow hierarchical policy</li>
+      <li>adaptive test-time computation</li>
+      <li>persistent memory와 continual adaptation</li>
+      <li>safety verification 및 failure recovery</li>
+      <li>tactile·force·proprioception을 포함한 multimodal VLA</li>
+      <li>action-aware uncertainty</li>
+      <li>data curation과 failure-focused training</li>
+      <li>foundation model과 classical planning/control의 결합</li>
+      <li>실제 로봇 장기 운용 benchmark</li>
+    </ul>
+
+    <h2>최종 결론</h2>
+
+    <p>IROS 2026은 “VLM이 로봇에 유용한가?”라는 질문에는 사실상 <strong>그렇다</strong>고 답한 프로그램이다. 이제 더 중요한 질문은 다음과 같다.</p>
+
+    <blockquote>
+      <p><strong>불완전하고 느리며 확률적인 foundation model을, 구조화되고 검증 가능하며 실시간으로 동작하는 로봇 시스템으로 어떻게 변환할 것인가?</strong></p>
+    </blockquote>
+
+    <p>차세대 연구의 승부처는 더 큰 VLM을 만드는 데만 있지 않다. 오히려 다음 네 요소를 얼마나 설득력 있게 결합하느냐에 달려 있다.</p>
+
+    <div class="equation"><strong>Structured World State + Selective Reasoning + Closed-Loop Action + Runtime Assurance</strong></div>
+
+    <p>결국 VLM/VLA 연구는 <strong>모델 중심 경쟁에서 시스템 원리 중심 경쟁으로 이동하고 있다</strong>고 평가할 수 있다.</p>
+  </article>
+</body>
+</html>
+
+

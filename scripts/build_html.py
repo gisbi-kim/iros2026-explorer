@@ -1786,7 +1786,7 @@ Array.from(affCount.entries()).sort((a,b)=>b[1]-a[1]).slice(0, 100).forEach(([af
 });
 
 // Search
-let PAGE = 50;
+let PAGE = 500;
 let page = 0;
 let filtered = PAPERS;
 function escapeHTML(s){ return s.replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[ch])); }

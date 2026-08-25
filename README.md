@@ -32,7 +32,9 @@ The generated standalone page is `output/iros2026_explorer.html`.
 
 ## Analysis
 
+- Analysis index: <https://gisbi-kim.github.io/iros2026-explorer/output/analysis/>
 - VLM/VLA research landscape review: <https://gisbi-kim.github.io/iros2026-explorer/output/iros2026_vlm_vla_landscape_review.html>
+- Vision-Language Navigation research landscape: <https://gisbi-kim.github.io/iros2026-explorer/output/iros_2026_vln_landscape.html>
 
 ## Source
 

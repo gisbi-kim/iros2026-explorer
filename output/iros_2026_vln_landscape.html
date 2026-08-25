@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IROS 2026 Vision-Language Navigation Research Landscape</title>
+  <style>
+    html, body {
+      background: #ffffff;
+      color: #111111;
+    }
+
+    body {
+      max-width: 960px;
+      margin: 40px auto;
+      padding: 0 24px 64px;
+      font-family: Arial, "Noto Sans KR", sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    h1, h2, h3 {
+      line-height: 1.35;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin: 0 0 1.5rem;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      margin: 2.8rem 0 1rem;
+    }
+
+    h3 {
+      font-size: 1.2rem;
+      margin: 2rem 0 0.8rem;
+    }
+
+    p, ul, ol, blockquote, table {
+      margin-top: 0;
+      margin-bottom: 1.2rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border: 1px solid #999999;
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      font-weight: 700;
+    }
+
+    blockquote {
+      margin-left: 0;
+      padding-left: 1rem;
+      border-left: 3px solid #999999;
+    }
+
+    a {
+      color: #111111;
+      text-decoration: underline;
+    }
+
+    .number {
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>IROS 2026 Vision-Language Navigation Research Landscape</h1>
+
+    <p>IROS 2026의 1,933편 전체 프로그램을 검토하면, VLN 관련 논문은 범위를 어떻게 정의하느냐에 따라 다음과 같이 나뉜다.</p>
+
+    <ul>
+      <li>좁은 의미의 직접 VLN: 20편</li>
+      <li>Object-goal·semantic navigation까지 포함한 확장 VLN: 16편</li>
+      <li>VLM/VLA 기반 특수 플랫폼 navigation: 10편</li>
+      <li>Memory·interaction·personalization 등 VLN 구성요소 연구: 10편</li>
+      <li>언어 조건은 없지만 VLN과 밀접한 인접 연구: 9편</li>
+    </ul>
+
+    <p>따라서 넓은 의미에서는 총 65편이 VLN 연구 생태계와 관련된다. 다만 마지막 9편은 엄밀한 의미의 VLN이 아니라 comparison method나 supporting component에 해당한다.</p>
+
+    <p>논문 제목과 프로그램 메타데이터는 <a href="https://2026.ieee-iros.org/program/paper_index/">IROS 2026 공식 Paper &amp; Author Index</a>와 <a href="https://gisbi-kim.github.io/iros2026-explorer/output/iros2026_explorer.html">IROS 2026 Paper Explorer</a>를 기준으로 정리하였다.</p>
+
+    <h2>1. 좁은 의미의 직접 VLN: 20편</h2>
+
+    <p>자연어 명령, vision-language reasoning, 언어 조건부 waypoint 생성 또는 언어 조건부 navigation action이 명시된 핵심 논문들이다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>논문</th>
+          <th>핵심 축</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="number">3990</td>
+          <td><strong>VL-Nav: A Neuro-Symbolic Approach for Reasoning-Based Vision-Language Navigation</strong></td>
+          <td>Scene graph와 image memory를 이용한 task decomposition, replanning, exploration을 다룬다. <a href="https://arxiv.org/abs/2502.00931">논문</a></td>
+        </tr>
+        <tr>
+          <td class="number">3835</td>
+          <td><strong>ViTL: Temporal Logic-Guided Zero-Shot Natural Language Navigation Via Vision-Language Models</strong></td>
+          <td>자연어 명령을 temporal logic으로 grounding한다.</td>
+        </tr>
+        <tr>
+          <td class="number">219</td>
+          <td><strong>View Invariant Learning for Vision-Language Navigation in Continuous Environments</strong></td>
+          <td>연속 환경에서 viewpoint 변화에 강한 VLN을 다룬다.</td>
+        </tr>
+        <tr>
+          <td class="number">1230</td>
+          <td><strong>JOP-VLN: Joint On-and-Off Policy Learning for Vision-and-Language Navigation</strong></td>
+          <td>On-policy와 offline learning을 결합한다.</td>
+        </tr>
+        <tr>
+          <td class="number">3526</td>
+          <td><strong>Revisiting Topological Graphs for Macro Action Based Closed-Loop Reinforcement Learning of Vision Language Navigation in Continuous Environment</strong></td>
+          <td>Topological macro-action 기반 폐루프 VLN을 제안한다.</td>
+        </tr>
+        <tr>
+          <td class="number">2369</td>
+          <td><strong>HaltNav: Reactive Visual Halting Over Lightweight Topological Priors for Robust Vision-Language Navigation</strong></td>
+          <td>언제 멈출지를 판단하는 reactive halting을 다룬다.</td>
+        </tr>
+        <tr>
+          <td class="number">1976</td>
+          <td><strong>Talk2Escape: Conversational Grounding for Vision-And-Language Navigation</strong></td>
+          <td>대화를 통한 명령 grounding과 협업형 VLN을 다룬다.</td>
+        </tr>
+        <tr>
+          <td class="number">3151</td>
+          <td><strong>History-Conditioned Spatio-Temporal Visual Token Pruning for Efficient Vision-Language Navigation</strong></td>
+          <td>Navigation history를 이용하여 visual token을 효율적으로 pruning한다.</td>
+        </tr>
+        <tr>
+          <td class="number">4043</td>
+          <td><strong>ImagiNav: Scalable Embodied Navigation Via Generative Visual Prediction and Inverse Dynamics</strong></td>
+          <td>자연어 navigation을 visual future prediction과 inverse dynamics로 해결한다.</td>
+        </tr>
+        <tr>
+          <td class="number">1909</td>
+          <td><strong>OnFly: Onboard Zero-Shot Aerial Vision-Language Navigation Toward Safety and Efficiency</strong></td>
+          <td>UAV onboard 환경에서 zero-shot VLN을 수행한다.</td>
+        </tr>
+        <tr>
+          <td class="number">1246</td>
+          <td><strong>ViSA-Enhanced Aerial VLN: A Visual-Spatial Reasoning Framework for Aerial Vision-Language Navigation</strong></td>
+          <td>Visual prompting 기반 aerial spatial reasoning을 제안한다. <a href="https://arxiv.org/abs/2603.08007">논문</a></td>
+        </tr>
+        <tr>
+          <td class="number">4260</td>
+          <td><strong>VLM-MPPI: Grounding Natural Language in Behaviorally Diverse Trajectories for Aerial Navigation</strong></td>
+          <td>자연어를 MPPI trajectory distribution에 grounding한다.</td>
+        </tr>
+        <tr>
+          <td class="number">1132</td>
+          <td><strong>Fly As I Say: A Language-Guided Gradient-Based Local Planner for Quadrotors with Vision Language Models</strong></td>
+          <td>자연어와 VLM을 이용한 quadrotor local planning을 다룬다.</td>
+        </tr>
+        <tr>
+          <td class="number">1897</td>
+          <td><strong>DTNav: Dual-Target Vision–Language Navigation with Decoupled Topological Memory for Indoor UAVs</strong></td>
+          <td>Dual target와 topological memory를 이용한 indoor UAV VLN을 제안한다.</td>
+        </tr>
+        <tr>
+          <td class="number">679</td>
+          <td><strong>LibrayNav: Vision-Language Navigation for Quadruped Robots in Library Environments</strong></td>
+          <td>Quadruped robot을 이용한 실환경 VLN을 다룬다.</td>
+        </tr>
+        <tr>
+          <td class="number">2055</td>
+          <td><strong>VLN-AVP: Zero-Shot Vision-Language Navigation with Hybrid Long-Short-Term Memory for Autonomous Valet Parking</strong></td>
+          <td>자율주차 환경에서 장·단기 memory를 결합한다.</td>
+        </tr>
+        <tr>
+          <td class="number">4276</td>
+          <td><strong>WayFinder: Hierarchical Visual-Language-Action for Zero-Shot Waypoint Generation and Low-Level Kinematic Control</strong></td>
+          <td>언어 조건부 waypoint 생성과 저수준 제어를 연결한다.</td>
+        </tr>
+        <tr>
+          <td class="number">358</td>
+          <td><strong>HA-VLN 2.0: An Open Benchmark and Leaderboard for Human-Aware Navigation in Discrete and Continuous Environments with Dynamic Multi-Human Interactions</strong></td>
+          <td>동적 사람을 포함한 human-aware VLN benchmark를 제공한다.</td>
+        </tr>
+        <tr>
+          <td class="number">3431</td>
+          <td><strong>NavTrust: Benchmarking Trustworthiness for Embodied Navigation</strong></td>
+          <td>VLN과 OGN의 RGB, depth, instruction corruption에 대한 신뢰성을 평가한다. <a href="https://arxiv.org/abs/2603.19229">논문</a></td>
+        </tr>
+        <tr>
+          <td class="number">1880</td>
+          <td><strong>SoftNav: Injecting 3D Scene Tokens into VLMs for Embodied Navigation</strong></td>
+          <td>VLM에 3D scene token을 주입하여 embodied navigation을 수행한다.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>우선적으로 살펴볼 논문</h3>
+
+    <ol>
+      <li>VL-Nav</li>
+      <li>ViTL</li>
+      <li>Talk2Escape</li>
+      <li>HaltNav</li>
+      <li>SoftNav</li>
+      <li>NavTrust</li>
+      <li>ImagiNav</li>
+      <li>OnFly</li>
+      <li>ViSA-Enhanced Aerial VLN</li>
+      <li>View Invariant Learning for VLN</li>
+    </ol>
+
+    <h2>2. Object-Goal·Open-Vocabulary·Semantic Navigation: 16편</h2>
+
+    <p>전통적인 VLN처럼 상세한 route instruction을 따르지는 않지만, 언어적 목표나 semantic concept를 이용해 탐색하고 이동하는 논문들이다. 최근에는 VLN과 object-goal navigation의 경계가 흐려지고 있으므로 이 연구군도 함께 살펴볼 필요가 있다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>논문</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="number">2754</td><td><strong>MSM-Nav: Integrating Multi-Modal Spatial Map for Zero-Shot Open-Vocabulary Object-Goal Navigation Via LLM-Driven Trap Avoidance</strong></td></tr>
+        <tr><td class="number">2842</td><td><strong>SGC-Nav: Scene Graph Conditioned Multi-LLM Consensus for Mapless Zero-Shot Object Navigation</strong></td></tr>
+        <tr><td class="number">1185</td><td><strong>SAGE-Nav: Leveraging LLM Planning and Alignment Fusion for Hierarchical Scene Graph-Guided Navigation</strong></td></tr>
+        <tr><td class="number">3840</td><td><strong>AFSM-Nav: Training-Free Object Navigation Via Self-Repairing LLM-Synthesized Finite State Machines</strong></td></tr>
+        <tr><td class="number">23</td><td><strong>Stairway to Success: An Online Floor-Aware Zero-Shot Object-Goal Navigation Framework Via LLM-Driven Coarse-To-Fine Exploration</strong></td></tr>
+        <tr><td class="number">220</td><td><strong>Object Search in Partially-Known Environments Via LLM-Informed Model-Based Planning and Prompt Selection</strong></td></tr>
+        <tr><td class="number">3266</td><td><strong>BEACON: Language-Conditioned Navigation Affordance Prediction under Occlusion</strong></td></tr>
+        <tr><td class="number">1835</td><td><strong>Frontier-as-Token: Structured Spatial Reasoning for Zero-Shot Object Navigation</strong></td></tr>
+        <tr><td class="number">2553</td><td><strong>SparseNav: Efficient Zero-Shot Object-Goal Navigation with Multi-Layer Sparse Semantic Mapping</strong></td></tr>
+        <tr><td class="number">4257</td><td><strong>Room-Mediated Co-Occurrence for Zero-Shot Object-Centric Semantic Navigation Via Frontier Scoring</strong></td></tr>
+        <tr><td class="number">86</td><td><strong>Where Did I Leave My Glasses? Open-Vocabulary Semantic Exploration in Real-World Semi-Static Environments</strong></td></tr>
+        <tr><td class="number">1492</td><td><strong>Uncertainty-Aware Zero-Shot Object Navigation Via Semantic Bayesian Belief</strong></td></tr>
+        <tr><td class="number">1690</td><td><strong>LoRANav: Structurally-Constrained Low-Rank Adaptation for Open-Vocabulary Object Goal Navigation</strong></td></tr>
+        <tr><td class="number">1881</td><td><strong>REST: Receding Horizon Explorative Steiner Tree for Zero-Shot Object-Goal Navigation</strong></td></tr>
+        <tr><td class="number">2009</td><td><strong>EPANav: An Exploration-Progress-Aware Object Navigation Framework</strong></td></tr>
+        <tr><td class="number">2793</td><td><strong>IMPRINT: Image-Conditioned Query Enrichment for Long-Tail Object Goal Navigation</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>이 연구군에서 특히 주목할 흐름은 다음과 같다.</p>
+
+    <ul>
+      <li><strong>MSM-Nav:</strong> spatial memory와 LLM 기반 trap avoidance를 결합한다.</li>
+      <li><strong>SGC-Nav:</strong> scene graph와 multi-LLM consensus를 결합한다.</li>
+      <li><strong>SAGE-Nav:</strong> hierarchical scene graph와 LLM planning을 결합한다.</li>
+      <li><strong>AFSM-Nav:</strong> LLM이 생성한 finite-state machine을 실행 중 self-repair한다.</li>
+      <li><strong>BEACON:</strong> occlusion 상황에서 language-conditioned navigation affordance를 예측한다.</li>
+      <li><strong>Frontier-as-Token:</strong> exploration frontier를 reasoning token으로 취급한다.</li>
+      <li><strong>Stairway to Success:</strong> multi-floor object-goal navigation을 다룬다.</li>
+    </ul>
+
+    <h2>3. VLM/VLA 기반 특수 플랫폼 Navigation: 10편</h2>
+
+    <p>언어 명령 추종형 VLN과는 조금 다르지만, VLM 또는 VLA가 실제 이동 정책이나 planning에 직접 관여한다는 점에서 관련성이 높다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>논문</th>
+          <th>플랫폼</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="number">58</td><td><strong>NAMO-LLM: Efficient Navigation among Movable Obstacles with Large Language Model Guidance</strong></td><td>Movable-obstacle navigation</td></tr>
+        <tr><td class="number">4894</td><td><strong>GRaD-Nav++: Vision-Language Model Enabled Visual Drone Navigation with Gaussian Radiance Fields and Differentiable Dynamics</strong></td><td>Drone</td></tr>
+        <tr><td class="number">1031</td><td><strong>MicroVLA: A Vision-Language-Action Framework for Microrobotic Navigation Considering Inter-Particle Micro-Force Fields</strong></td><td>Microrobot</td></tr>
+        <tr><td class="number">4480</td><td><strong>BiliVLA: Scene-Aware Vision-Language-Action Model with Reinforcement Learning for Autonomous Biliary Endoscopic Navigation</strong></td><td>Surgical endoscope</td></tr>
+        <tr><td class="number">2299</td><td><strong>Event-Adaptive Motion Planning with Distilled Vision-Language Model in Safety-Critical Situations</strong></td><td>Autonomous vehicle</td></tr>
+        <tr><td class="number">14</td><td><strong>Sim2Real Diffusion: Leveraging Foundation Vision Language Models for Adaptive Automated Driving</strong></td><td>Autonomous driving</td></tr>
+        <tr><td class="number">4040</td><td><strong>ATLAS: Asynchronous Temporal Learning with Adaptive LLM-Guided Shaping for Autonomous Driving Decision-Making</strong></td><td>Autonomous driving</td></tr>
+        <tr><td class="number">1649</td><td><strong>APPLV: Adaptive Planner Parameter Learning from Vision-Language-Action Model</strong></td><td>Autonomous driving</td></tr>
+        <tr><td class="number">952</td><td><strong>ViLaD: A Large Vision Language Diffusion Framework for End-To-End Autonomous Driving</strong></td><td>Autonomous driving</td></tr>
+        <tr><td class="number">1413</td><td><strong>CognitiveDrone: A VLA Model and Evaluation Benchmark for Real-Time Cognitive Task Solving and Reasoning in UAVs</strong></td><td>UAV</td></tr>
+      </tbody>
+    </table>
+
+    <p>NAMO-LLM은 언어가 단순한 목표 표현에 머무르지 않고 movable obstacle을 어떻게 처리할지 결정하는 high-level planner에 들어간다는 점에서 중요한 확장형 VLN에 해당한다.</p>
+
+    <h2>4. Memory·Context·Interaction·Personalization: 10편</h2>
+
+    <p>VLN 자체를 중심 주제로 삼지는 않지만, 장기 navigation agent를 구성하는 데 필요한 memory, human routine, cognitive map, interaction을 다루는 논문들이다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>논문</th>
+          <th>VLN 연결점</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="number">4391</td><td><strong>DyMemNav: Dynamic and Memory-Augmented Mixture-of-Experts for Cross-Scene Visual Navigation</strong></td><td>Cross-scene memory와 expert routing</td></tr>
+        <tr><td class="number">862</td><td><strong>HyperDCM: Dynamic Cluster Memory Replay in Hyperbolic Space for Continual Robotic Navigation Across Scenes</strong></td><td>Continual navigation과 memory replay</td></tr>
+        <tr><td class="number">3435</td><td><strong>Explore Like Humans: Autonomous Exploration with Online SG-Memo Construction for Embodied Agents</strong></td><td>Online scene-graph memory</td></tr>
+        <tr><td class="number">2169</td><td><strong>HIMM: Human-Inspired Long-Term Memory Modeling for Embodied Exploration and Question Answering</strong></td><td>Long-term embodied memory</td></tr>
+        <tr><td class="number">4944</td><td><strong>A Robot System for Indoor Environment Question Answering with Cognitive Map Leveraging Vision-Language Models</strong></td><td>Cognitive map 기반 질의와 navigation grounding</td></tr>
+        <tr><td class="number">287</td><td><strong>Language-Guided Generation for Personalized Inspection Planning</strong></td><td>사용자 언어 기반 inspection route planning</td></tr>
+        <tr><td class="number">874</td><td><strong>HUMEMBR: Learning Human Routines for Predictive Embodied Navigation</strong></td><td>인간 routine 예측 기반 navigation</td></tr>
+        <tr><td class="number">1898</td><td><strong>MRPoS: Mixed Reality-Based Robot Navigation Interface Using Spatial Pointing and Speech with Large Language Model</strong></td><td>Pointing, speech, LLM을 통한 navigation 명령</td></tr>
+        <tr><td class="number">1714</td><td><strong>GROVE: Grounded Pedestrian Simulation Via Natural Language for Interactive Social Robot Navigation</strong></td><td>자연어를 이용한 social navigation 상황 생성</td></tr>
+        <tr><td class="number">1444</td><td><strong>When to Personalize Household Object Search: A Rigidity-Gated Hybrid Policy</strong></td><td>사용자별 search policy를 적용할 시점의 판단</td></tr>
+      </tbody>
+    </table>
+
+    <blockquote>
+      Long-term scene memory → language-grounded task → navigation policy → failure or ambiguity → ask, replan, or retrieve → memory update의 순환 구조가 장기 VLN agent의 핵심 구조로 부상하고 있다.
+    </blockquote>
+
+    <p>HIMM, SG-Memo, DyMemNav, HyperDCM, cognitive-map question answering은 서로 다른 형태의 장기 memory를 다룬다. 다만 episodic memory, semantic memory, topological memory와 working memory를 하나의 계층적 구조로 통합하는 연구는 아직 제한적이다.</p>
+
+    <h2>5. VLN과 밀접하지만 엄밀히는 비언어 Navigation인 논문: 9편</h2>
+
+    <p>다음 논문들은 language instruction을 사용한다고 프로그램상 명확하게 확인되지 않는다. 따라서 직접적인 VLN 논문 수에는 포함시키지 않고 comparison method 또는 supporting component로 분류하는 것이 정확하다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>논문</th>
+          <th>정확한 분류</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="number">1136</td><td><strong>DINO-Nav: Unified Explicit Localization and Diffusion Planning for Robust Image-Goal Navigation</strong></td><td>Image-goal navigation</td></tr>
+        <tr><td class="number">1931</td><td><strong>SpatialAnt: Autonomous Zero-Shot Robot Navigation Via Active Scene Reconstruction and Visual Anticipation</strong></td><td>Visual anticipation</td></tr>
+        <tr><td class="number">2013</td><td><strong>AION: Aerial Indoor Object-Goal Navigation Using Dual-Policy Reinforcement Learning</strong></td><td>Aerial object-goal navigation</td></tr>
+        <tr><td class="number">107</td><td><strong>SenseExpo: Spatial Exploration and Navigation Via Scene Estimation from Expeditious Predictive Operators</strong></td><td>Embodied exploration</td></tr>
+        <tr><td class="number">4280</td><td><strong>ViDi-Nav: Fast and Robust Obstacle-Aware Vision-Based Navigation on Uneven Terrain Via Differentiable Physics</strong></td><td>Visual navigation</td></tr>
+        <tr><td class="number">967</td><td><strong>FastMap: Real-Time Semantic Map Completion Via Bitwise Masked Modeling</strong></td><td>Semantic map completion</td></tr>
+        <tr><td class="number">4091</td><td><strong>Interleaved POMDP Planning for Multi-Object Search in Unknown Multi-Room Household Environments</strong></td><td>Object search</td></tr>
+        <tr><td class="number">4344</td><td><strong>DM³-Nav: Decentralized Multi-Agent Multimodal Multi-Object Semantic Navigation</strong></td><td>Multi-agent semantic navigation</td></tr>
+        <tr><td class="number">1198</td><td><strong>Learning Adaptive Safety Margins for Visual Navigation</strong></td><td>Navigation safety</td></tr>
+      </tbody>
+    </table>
+
+    <h2>6. IROS 2026 VLN 연구의 주요 흐름</h2>
+
+    <h3>6.1 End-to-End Instruction Following에서 Structured Reasoning으로 이동한다</h3>
+
+    <p>VL-Nav, ViTL, SGC-Nav, SAGE-Nav를 중심으로 다음과 같은 구조적 표현의 사용이 증가하고 있다.</p>
+
+    <ul>
+      <li>Scene graph</li>
+      <li>Temporal logic</li>
+      <li>Topological graph</li>
+      <li>Finite-state machine</li>
+      <li>Symbolic task decomposition</li>
+      <li>Explicit memory</li>
+    </ul>
+
+    <p>이는 VLM에 이미지와 명령을 입력하고 next action을 직접 질의하는 방식만으로는 장기적이고 복합적인 navigation을 해결하기 어렵다는 인식이 확산되고 있음을 보여준다.</p>
+
+    <h3>6.2 Navigation Memory가 기능별로 세분화된다</h3>
+
+    <ul>
+      <li><strong>Topological memory:</strong> DTNav, VLN-AVP, HaltNav</li>
+      <li><strong>Scene-graph memory:</strong> SGC-Nav, SAGE-Nav, SG-Memo</li>
+      <li><strong>Long-term episodic memory:</strong> HIMM</li>
+      <li><strong>Continual memory replay:</strong> HyperDCM</li>
+      <li><strong>Cross-scene expert memory:</strong> DyMemNav</li>
+      <li><strong>History compression:</strong> History-Conditioned Token Pruning</li>
+    </ul>
+
+    <p>현재 연구들은 특정 memory 기능을 각각 강화하는 방향으로 발전하고 있다. 그러나 서로 다른 시간척도와 공간척도의 memory를 통합하고, retrieval, update, consolidation, forgetting을 함께 다루는 연구는 아직 충분하지 않다.</p>
+
+    <h3>6.3 Object-Goal Navigation과 VLN의 경계가 흐려진다</h3>
+
+    <p>과거에는 VLN과 object-goal navigation이 비교적 명확하게 구분되었다.</p>
+
+    <ul>
+      <li><strong>VLN:</strong> “복도를 따라가서 왼쪽 두 번째 방으로 들어가라”와 같은 route instruction을 따른다.</li>
+      <li><strong>Object-goal navigation:</strong> “전자레인지를 찾아라”와 같은 semantic goal을 달성한다.</li>
+    </ul>
+
+    <p>그러나 IROS 2026의 object-goal navigation 연구에서는 LLM이 목표를 해석하고, scene graph와 semantic prior를 사용하여 subgoal과 탐색 전략을 생성한다. 이에 따라 object-goal navigation이 간접적인 language-conditioned navigation으로 변화하고 있다.</p>
+
+    <h3>6.4 Aerial VLN이 독립적인 연구축으로 성장한다</h3>
+
+    <p>OnFly, ViSA, VLM-MPPI, Fly As I Say, DTNav, GRaD-Nav++ 등 최소 6편의 강한 aerial VLN 및 VLM navigation 연구가 확인된다. Aerial VLN에서는 다음 문제가 집중적으로 다뤄진다.</p>
+
+    <ul>
+      <li>3차원 viewpoint와 고도 변화</li>
+      <li>긴 navigation horizon</li>
+      <li>Onboard inference latency</li>
+      <li>Global–local planning</li>
+      <li>Safety constraint</li>
+      <li>History와 topological memory</li>
+    </ul>
+
+    <h3>6.5 평균 성공률만으로는 충분하지 않다</h3>
+
+    <p>NavTrust, HaltNav, HA-VLN 2.0, token-pruning 연구가 보여주듯이 VLN의 평가축이 다음과 같이 확장되고 있다.</p>
+
+    <ul>
+      <li>Instruction corruption</li>
+      <li>RGB와 depth corruption</li>
+      <li>Dynamic human interaction</li>
+      <li>Stopping accuracy</li>
+      <li>Computation과 latency</li>
+      <li>Cross-view generalization</li>
+      <li>Cross-scene continual adaptation</li>
+    </ul>
+
+    <h2>7. 연구 공백과 Future-Work 방향</h2>
+
+    <p>IROS 2026에는 memory를 사용하는 VLN 연구가 많지만, 장기 운용 중 축적되는 장면을 시간척도, 공간척도, semantic abstraction에 따라 계층적으로 조직하고 retrieval, forgetting, clarification, replanning까지 하나의 lifelong loop로 묶는 연구는 아직 뚜렷하지 않다.</p>
+
+    <h3>7.1 Hierarchical Lifelong Memory</h3>
+
+    <p>단일 memory buffer가 아니라 working, episodic, semantic, topological memory의 역할을 분리하고 상호 변환하는 구조가 필요하다. 새로운 관측을 무조건 저장하는 것이 아니라 novelty, uncertainty, task relevance를 기준으로 기억의 승격과 삭제를 결정해야 한다.</p>
+
+    <h3>7.2 Event-Triggered Reasoning</h3>
+
+    <p>VLM이나 LLM을 매 step 호출하는 방식은 계산량과 latency 측면에서 지속 가능하지 않다. 모호한 명령, semantic conflict, localization uncertainty, progress stagnation, 예상치 못한 장애물처럼 reasoning이 필요한 사건을 감지하고 필요한 순간에만 고비용 추론을 수행해야 한다.</p>
+
+    <h3>7.3 Clarification, Recovery, and Replanning</h3>
+
+    <p>향후 VLN agent는 단순히 명령을 수행하는 executor가 아니라, 모호함을 감지해 질문하고 실패 원인을 추론하며 memory와 계획을 수정하는 collaborator로 발전할 필요가 있다. Talk2Escape, HaltNav, AFSM-Nav가 각각 대화, stopping, self-repair의 일부를 다루지만 이를 통합한 시스템은 아직 부족하다.</p>
+
+    <h3>7.4 Evaluation Beyond SR and SPL</h3>
+
+    <p>Success Rate와 SPL만으로는 장기 VLN agent의 품질을 충분히 설명할 수 없다. 다음 평가항목이 함께 필요하다.</p>
+
+    <ul>
+      <li>Instruction ambiguity와 corruption에 대한 강건성</li>
+      <li>잘못된 memory retrieval의 탐지와 복구</li>
+      <li>시간이 지나면서 변하는 환경에 대한 continual adaptation</li>
+      <li>질문이 필요한 상황을 정확히 판별하는 clarification precision</li>
+      <li>Reasoning 호출 횟수, latency, energy consumption</li>
+      <li>장시간 운용에서 memory size와 성능의 변화</li>
+      <li>사람, 장소, 물체, 관계 변화에 대한 temporal consistency</li>
+    </ul>
+
+    <h2>8. 결론</h2>
+
+    <p>IROS 2026의 VLN 연구는 단순한 instruction following을 넘어 structured reasoning, explicit memory, object-goal search, aerial navigation, human-aware interaction, robustness evaluation으로 빠르게 확장되고 있다.</p>
+
+    <p>가장 강한 공통 흐름은 다음과 같이 요약할 수 있다.</p>
+
+    <blockquote>
+      Vision-language navigation은 하나의 end-to-end policy 문제가 아니라, perception, memory, semantic reasoning, planning, interaction, recovery를 결합하는 장기 embodied autonomy 문제로 재정의되고 있다.
+    </blockquote>
+
+    <p>향후 경쟁력 있는 연구는 특정 benchmark의 성공률만 높이는 방법보다, 장기 운용에서 무엇을 기억하고 언제 reasoning하며 어떻게 질문하고 실패에서 복구하는지를 함께 설명할 수 있어야 한다.</p>
+  </main>
+</body>
+</html>
+

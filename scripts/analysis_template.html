@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="IROS 2026 로봇 reasoning 논문 64편의 전체 목록, 기능적 분류, 핵심 연구 흐름과 future-work gap 분석." />
+<meta property="og:title" content="IROS 2026 · Reasoning Papers Analysis" />
+<meta property="og:description" content="IROS 2026 로봇 reasoning 논문 64편의 연구 동향 분석" />
+<meta property="og:type" content="article" />
+<title>IROS 2026 · Reasoning Papers Analysis</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous" />
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #f5f5f7;
+    --bg-soft: #fafafa;
+    --panel: #ffffff;
+    --border: #d2d2d7;
+    --border-soft: #e5e5ea;
+    --text: #1d1d1f;
+    --text-2: #424245;
+    --muted: #6e6e73;
+    --muted-2: #86868b;
+    --accent: #0066cc;
+    --accent-hover: #0058b0;
+    --accent-soft: rgba(0,102,204,0.08);
+    --green: #248a3d;
+    --shadow: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+    --shadow-lg: 0 4px 16px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+    --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+            "Segoe UI", "Pretendard", "Noto Sans KR", system-ui, sans-serif;
+    --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  html, body {
+    margin: 0; padding: 0; background: var(--bg); color: var(--text);
+    font-family: var(--font); -webkit-font-smoothing: antialiased;
+    font-size: 15px; line-height: 1.65;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .topbar {
+    position: sticky; top: 0; z-index: 50; height: 52px;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .topbar .inner {
+    max-width: 1440px; height: 100%; margin: 0 auto; padding: 0 24px;
+    display: flex; align-items: center; gap: 18px;
+  }
+  .brand { color: inherit; font-size: 17px; font-weight: 600; letter-spacing: -0.02em; white-space: nowrap; }
+  .brand:hover { opacity: 0.72; text-decoration: none; }
+  .brand .dot { color: var(--accent); }
+  .topbar .meta { color: var(--muted); font-size: 13px; }
+  .topnav { margin-left: auto; display: flex; align-items: center; gap: 4px; }
+  .topnav a {
+    padding: 5px 10px; border-radius: 7px; color: var(--muted);
+    font-size: 13px; font-weight: 500;
+  }
+  .topnav a:hover { color: var(--text); background: var(--bg-alt); text-decoration: none; }
+  .topnav a.active { color: var(--accent); background: var(--accent-soft); }
+
+  .layout {
+    max-width: 1280px; margin: 0 auto; padding: 0 24px;
+    display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 48px;
+    align-items: start;
+  }
+  .sidebar {
+    position: sticky; top: 68px; max-height: calc(100vh - 84px);
+    padding: 28px 0; overflow-y: auto; scrollbar-width: thin;
+  }
+  .sidebar h4 {
+    margin: 0 0 8px; color: var(--muted); font-size: 11px;
+    font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .sidebar a {
+    display: block; margin: 1px 0; padding: 6px 10px;
+    border-left: 2px solid transparent; border-radius: 6px;
+    color: var(--text-2); font-size: 13px; line-height: 1.4;
+  }
+  .sidebar a.sub { padding-left: 20px; color: var(--muted); font-size: 12.5px; }
+  .sidebar a:hover { color: var(--text); background: var(--bg-alt); text-decoration: none; }
+  .sidebar a.active { color: var(--accent); border-left-color: var(--accent); background: var(--accent-soft); }
+
+  main { min-width: 0; padding: 40px 0 80px; }
+  .article { max-width: 940px; }
+  .article > h1:first-of-type {
+    margin: 4px 0 12px; padding-bottom: 20px; border-bottom: 0;
+    font-size: clamp(32px, 4vw, 46px); line-height: 1.16;
+    font-weight: 700; letter-spacing: -0.035em;
+  }
+  .article > h1:first-of-type::before {
+    content: "2026 IEEE/RSJ IROS · RESEARCH ANALYSIS"; display: block;
+    margin-bottom: 10px; color: var(--muted); font-size: 12px; line-height: 1.4;
+    font-weight: 600; letter-spacing: 0.10em;
+  }
+  h1:not(:first-of-type) {
+    margin: 64px 0 18px; padding-top: 26px; border-top: 1px solid var(--border-soft);
+    font-size: 28px; line-height: 1.3; letter-spacing: -0.02em;
+  }
+  h2 {
+    margin: 48px 0 14px; scroll-margin-top: 72px;
+    font-size: 22px; line-height: 1.35; letter-spacing: -0.015em;
+  }
+  h1 { scroll-margin-top: 72px; }
+  p { margin: 0 0 16px; color: var(--text-2); }
+  strong { color: var(--text); font-weight: 650; }
+  ul, ol { margin: 8px 0 20px; padding-left: 1.5rem; color: var(--text-2); }
+  li { margin: 6px 0; padding-left: 3px; }
+  li::marker { color: var(--muted-2); }
+  code {
+    padding: 2px 5px; border: 1px solid var(--border-soft); border-radius: 5px;
+    background: var(--bg-alt); color: var(--text); font-family: var(--mono); font-size: 0.88em;
+  }
+  pre {
+    margin: 20px 0 24px; padding: 18px 20px; overflow-x: auto;
+    border: 1px solid var(--border-soft); border-radius: 12px; background: var(--bg-soft);
+    box-shadow: var(--shadow);
+  }
+  pre code { padding: 0; border: 0; background: transparent; font-size: 13px; line-height: 1.65; }
+
+  .table-wrap {
+    width: 100%; margin: 18px 0 28px; overflow-x: auto;
+    border: 1px solid var(--border-soft); border-radius: 12px; box-shadow: var(--shadow);
+  }
+  table { width: 100%; border-collapse: collapse; background: var(--panel); font-size: 13.5px; line-height: 1.5; }
+  th, td { padding: 11px 13px; border-bottom: 1px solid var(--border-soft); text-align: left; vertical-align: top; }
+  th { position: sticky; top: 0; background: var(--bg-alt); color: var(--text); font-size: 12px; font-weight: 650; white-space: nowrap; }
+  tbody tr:last-child td { border-bottom: 0; }
+  tbody tr:hover { background: var(--bg-soft); }
+  td:nth-child(1), td:nth-child(2) { white-space: nowrap; }
+  td code { white-space: nowrap; }
+
+  .math-block {
+    margin: 24px 0; padding: 20px; overflow-x: auto; text-align: center;
+    border: 1px solid rgba(0,102,204,0.16); border-radius: 12px;
+    background: linear-gradient(135deg, #f8fbff 0%, #f4f8fd 100%);
+  }
+  .katex-display { margin: 0; }
+  .reading-note {
+    margin: 0 0 34px; padding: 14px 16px;
+    border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0;
+    background: var(--bg-soft); color: var(--text-2); font-size: 13px;
+  }
+  .back-top {
+    position: fixed; right: 22px; bottom: 22px; width: 38px; height: 38px;
+    display: grid; place-items: center; border: 1px solid var(--border-soft);
+    border-radius: 999px; background: rgba(255,255,255,0.9); color: var(--muted);
+    box-shadow: var(--shadow-lg); opacity: 0; pointer-events: none; transition: opacity 0.15s;
+  }
+  .back-top.visible { opacity: 1; pointer-events: auto; }
+  .back-top:hover { color: var(--accent); text-decoration: none; }
+  footer {
+    margin-top: 56px; padding: 30px 0; border-top: 1px solid var(--border-soft);
+    color: var(--muted); font-size: 12px; text-align: center;
+  }
+  footer .credit { margin-bottom: 6px; color: var(--text-2); font-weight: 600; }
+
+  @media (max-width: 980px) {
+    .layout { grid-template-columns: 1fr; padding: 0 18px; }
+    .sidebar { display: none; }
+    main { padding-top: 28px; }
+    .article { max-width: none; }
+  }
+  @media (max-width: 700px) {
+    .topbar .inner { padding: 0 14px; gap: 8px; }
+    .topbar .meta { display: none; }
+    .topnav a { padding: 5px 8px; font-size: 12px; }
+    .layout { padding: 0 14px; }
+    main { padding-top: 22px; }
+    .article > h1:first-of-type { font-size: 32px; }
+    h1:not(:first-of-type) { margin-top: 48px; font-size: 25px; }
+    h2 { margin-top: 38px; font-size: 20px; }
+    .table-wrap { width: calc(100vw - 28px); }
+    th, td { padding: 9px 10px; }
+    .back-top { right: 14px; bottom: 14px; }
+  }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="inner">
+    <a class="brand" href="iros2026_explorer.html">IROS 2026<span class="dot"> · </span>Paper Explorer</a>
+    <div class="meta">Pittsburgh, USA · September 28–30 paper program</div>
+    <nav class="topnav" aria-label="Site navigation">
+      <a href="iros2026_explorer.html">Explorer</a>
+      <a href="analysis/">Analysis</a>
+    </nav>
+  </div>
+</div>
+
+<div class="layout">
+  <aside class="sidebar" aria-label="문서 목차">
+    <h4>Contents</h4>
+    <nav id="toc"></nav>
+  </aside>
+  <main id="top">
+    <article class="article">
+<!--CONTENT-->
+    </article>
+    <footer>
+      <div class="credit">Made by <a href="https://aprl.dgist.ac.kr" target="_blank" rel="noopener">Giseop Kim</a></div>
+      IROS 2026 Reasoning Papers Analysis · Updated August 26, 2026
+    </footer>
+  </main>
+</div>
+<a class="back-top" href="#top" aria-label="맨 위로">↑</a>
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const article = document.querySelector(".article");
+  const headings = Array.from(article.querySelectorAll("h1, h2"));
+  const used = new Set();
+
+  function headingId(text, index) {
+    const number = text.match(/^((?:\d+\.)*\d+)/)?.[1]?.replace(/\./g, "-");
+    let base = number ? `section-${number}` : (index === 0 ? "introduction" : `section-${index + 1}`);
+    let id = base;
+    let suffix = 2;
+    while (used.has(id)) id = `${base}-${suffix++}`;
+    used.add(id);
+    return id;
+  }
+
+  headings.forEach((heading, index) => { heading.id = headingId(heading.textContent.trim(), index); });
+
+  const toc = document.getElementById("toc");
+  headings.filter((_, index) => index > 0).forEach(heading => {
+    const link = document.createElement("a");
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    if (heading.tagName === "H2") link.className = "sub";
+    toc.appendChild(link);
+  });
+
+  article.querySelectorAll("table").forEach(table => {
+    const wrap = document.createElement("div");
+    wrap.className = "table-wrap";
+    wrap.setAttribute("role", "region");
+    wrap.setAttribute("aria-label", "가로 스크롤 가능한 표");
+    table.parentNode.insertBefore(wrap, table);
+    wrap.appendChild(table);
+  });
+
+  if (window.renderMathInElement) {
+    renderMathInElement(article, {
+      delimiters: [
+        { left: "\\[", right: "\\]", display: true },
+        { left: "$$", right: "$$", display: true },
+        { left: "\\(", right: "\\)", display: false }
+      ],
+      throwOnError: false
+    });
+  }
+
+  const tocLinks = Array.from(toc.querySelectorAll("a"));
+  const observed = headings.slice(1);
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(entries => {
+      const current = entries.find(entry => entry.isIntersecting);
+      if (!current) return;
+      tocLinks.forEach(link => link.classList.toggle("active", link.hash === `#${current.target.id}`));
+    }, { rootMargin: "-18% 0px -72% 0px", threshold: 0 });
+    observed.forEach(heading => observer.observe(heading));
+  }
+
+  const backTop = document.querySelector(".back-top");
+  const updateBackTop = () => backTop.classList.toggle("visible", window.scrollY > 700);
+  window.addEventListener("scroll", updateBackTop, { passive: true });
+  updateBackTop();
+});
+</script>
+</body>
+</html>
